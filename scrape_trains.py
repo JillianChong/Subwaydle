@@ -33,7 +33,8 @@ def write_file(name, title, url):
     f = open("./Stations/" + name + ".txt", "w")
     stops = get_lines(url)
     print(title, file=f)
-    print(stops, file=f)
+    for stop in stops:
+        print(stop, file=f)
 
 trains = ["1", "2", "3", "4", "5", "6", "7", "A", "B", "C", "D", "E", "F", "G", "J", "L", "M", "N", "Q", "R", "W", "Z"]
 

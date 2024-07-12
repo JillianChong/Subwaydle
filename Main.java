@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
-    // String = train line, List<String> = stations
+    // String : train line, List<String> : stations
     public static HashMap<Character, List<String>> transfersByLine = new HashMap<>();
 
     public static void main(String[] args) {
