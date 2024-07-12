@@ -1,4 +1,11 @@
 J Train
+Jamaica Center-Parsons/Archer
+Sutphin Blvd-Archer Av-JFK Airport 
+121 St
+111 St
+104 St
+Woodhaven Blvd
+75 St-Elderts Ln
 Cypress Hills 
 Crescent St
 Norwood Av 
@@ -17,7 +24,7 @@ Hewes St
 Marcy Av 
 Delancey St-Essex St
 Bowery
-Canal St
-Chambers St
+Canal St (E)
+Chambers St (E)
 Fulton St
 Broad St

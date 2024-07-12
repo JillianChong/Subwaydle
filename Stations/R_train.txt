@@ -16,14 +16,14 @@ Lexington Av/59 St
 5 Av/59 St
 57 St-7 Av
 49 St
-Times Square-42 St
+Times Sq-42 St
 34 St-Herald Square
 28 St
 23 St
 14 St-Union Sq
 8 St-NYU
 Prince St
-Canal St
+Canal St (E)
 City Hall 
 Cortlandt St
 Rector St
@@ -33,7 +33,7 @@ Jay St-MetroTech
 DeKalb Av
 Atlantic Av-Barclays Ctr
 Union St
-4 Av-9 St
+4 Av-9 Sts
 Prospect Av
 25 St
 36 St

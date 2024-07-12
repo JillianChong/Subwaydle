@@ -38,6 +38,7 @@ def write_file(name, title, url):
 
 trains = ["1", "2", "3", "4", "5", "6", "7", "A", "B", "C", "D", "E", "F", "G", "J", "L", "M", "N", "Q", "R", "W", "Z"]
 
+# ARE YOU SURE? WILL OVERWRITE
 # for train in trains:
 #     write_file(train + "_train", train + " Train", "https://new.mta.info/maps/subway-line-maps/{f}-line".format(f=train))
 

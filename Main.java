@@ -10,10 +10,13 @@ import java.util.HashMap;
 public class Main {
     // String : train line, List<String> : stations
     public static HashMap<Character, List<String>> transfersByLine = new HashMap<>();
+    // String : 
+    public static HashMap<Character, List<String>> linesByStation = new HashMap<>();
 
     public static void main(String[] args) {
         sortByTransfers();
-        printHashMap();
+        // printHashMap();
+        System.out.println(printList(transfersByLine.get('Z')));
     }
 
     public static void sortByTransfers() {
@@ -51,7 +54,8 @@ public class Main {
         }
     }
 
-    public static void printHashMap() { // figure out how to use abstraction for parameters
+    // TODO : figure out how to use abstraction for parameters
+    public static void printHashMap() { 
         for(Character train : transfersByLine.keySet()) {
             System.out.println(Character.toString(train) + " Train: " + printList(transfersByLine.get(train)));
             System.out.println();
@@ -68,4 +72,5 @@ public class Main {
         
         return sb.toString();
     }
+
 }
