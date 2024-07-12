@@ -1,17 +1,46 @@
-Fourth Avenue/Ninth Street
-Atlantic Avenue–Barclays Center
-Broadway–Lafayette Street/Bleecker Street
-Canal Street  (New York City Subway)
-DeKalb Avenue  (BMT lines)
-Franklin Avenue/Botanic Garden
-Grand Central–42nd Street
-Hoyt–Schermerhorn Streets
-Jackson Heights–Roosevelt Avenue/74th Street
-Lexington Avenue/59th Street
-Myrtle–Wyckoff Avenues
-62nd Street/New Utrecht Avenue
+Four Av/Nin St
+14 St/Eigh Av
+14 St/Six Av
+14 St–Union Square
+34 St–Herald Square
+42nd St–Bryant Park/Fif Av
+50 St  (IND lines)
+59 St–Columbus Circle
+145 St  (IND lines)
+149 St–Grand Concourse
+161st St–Yankee Stadium
+168 St  (New York City Subway)
+Atlantic Av–Barclays Center
+Broadway–Lafayette St/Bleecker St
+Broadway Junction
+Brooklyn Bridge–City Hall/Chambers St
+Canal St  (New York City Subway)
+Canarsie–Rockaway Parkway
+Chambers St–World Trade Center/Park Place/Cortlandt St
+Coney Island–Stillwell Av
+Court Square–23rd St
+Borough Hall/Court St
+DeKalb Av  (BMT lines)
+Delancey St/Essex St
+Franklin Av/Botanic Garden
+Franklin Av  (Fulton St)
+Fulton St  (New York City Subway)
+Grand Central–42nd St
+Hoyt–Schermerhorn Sts
+Jackson Heights–Roosevelt Av/74 St
+Jamaica Center–Parsons/Archer
+Jay St–MetroTech
+Lexington Av/59 St
+Lexington Av/51st St
+Lexington Av–63rd St
+Metropolitan Av/Lorimer St
+Myrtle–Wyckoff Avs
+62nd St/New Utrecht Av
 Prospect Park  (BMT lines)
 Queensboro Plaza
-Seventh Avenue  (IND lines)
-Times Square–42nd Street
-West Eighth Street–New York Aquarium
+Seven Av  (IND lines)
+Sou Ferry/Whitehall St
+Sutphin Boulevard–Archer Av–JFK Airport
+Times Square–42nd St
+West Eigh St–New York Aquarium
+West Four St–Washington Square
