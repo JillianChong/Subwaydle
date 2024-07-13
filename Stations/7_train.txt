@@ -1,4 +1,4 @@
-7 Train
+7 Train (Queens -> Manhattan)
 Flushing-Main St 
 Mets-Willets Point
 111 St 

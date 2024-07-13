@@ -1,4 +1,4 @@
-L Train
+L Train (Manhattan -> Brooklyn)
 14 St (8 Av)
 14 St (6 Av)
 14 St-Union Sq

@@ -34,6 +34,34 @@ public class Main {
         // }
     }
 
+    public static void sortByLines() {
+        File file;
+        BufferedReader br;
+        try {
+            for(char train : trains) {
+                String filePath = "./Stations/" + Character.toString(train) + "_train.txt";
+                file = new File(filePath);
+
+                br = new BufferedReader(new FileReader(file));
+                br.readLine();
+
+                List<String> stations = new ArrayList<>();
+
+                String line = br.readLine();
+                while(line != null) {
+                    stations.add(line);
+                    line = br.readLine();
+                }
+
+                linesByStation.put(train, stations);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("TRAIN FILE NOT FOUND");
+        } catch (IOException e) {
+            System.out.println("IO EXCEPTION");
+        }
+    }
+
     public static void sortByTransfers() {
         File file = new File("./Transfers/transfers_copy.txt");
         BufferedReader br;
@@ -64,54 +92,6 @@ public class Main {
             }
         } catch (FileNotFoundException e) {
             System.out.println("TRANSFERS FILE NOT FOUND");
-        } catch (IOException e) {
-            System.out.println("IO EXCEPTION");
-        }
-    }
-
-    // TODO : figure out how to use abstraction for parameters
-    public static void printHashMap(HashMap<Character, List<String>> map) { 
-        for(Character train : map.keySet()) {
-            // System.out.println(Character.toString(train) + " Train: " + printList(map.get(train)));
-            System.out.println(Character.toString(train) + " Train: " + map.get(train));
-            System.out.println();
-        }
-    }
-
-    public static String printList(List<String> lst) {
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < lst.size()-1; i++) {
-            sb.append(lst.get(i) + ", ");
-        }
-
-        sb.append(lst.get(lst.size()-1));
-        
-        return sb.toString();
-    }
-
-    public static void sortByLines() {
-        File file;
-        BufferedReader br;
-        try {
-            for(char train : trains) {
-                String filePath = "./Stations/" + Character.toString(train) + "_train.txt";
-                file = new File(filePath);
-
-                br = new BufferedReader(new FileReader(file));
-                br.readLine();
-
-                List<String> stations = new ArrayList<>();
-
-                String line = br.readLine();
-                while(line != null) {
-                    stations.add(line);
-                    line = br.readLine();
-                }
-
-                linesByStation.put(train, stations);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("TRAIN FILE NOT FOUND");
         } catch (IOException e) {
             System.out.println("IO EXCEPTION");
         }
@@ -174,9 +154,14 @@ public class Main {
         List<String> possibleTransfers1 = transfersByLine.get(train1);
         String transferStation1 = possibleTransfers1.get(rand.nextInt(possibleTransfers1.size()));
 
+        if(transferStation1.contains("&")) {
+            transferStation1 = transferStation1.substring(0,transferStation1.indexOf('&')-1);
+        }
+
         // generate Train Line 2
         List<Character> possibleTrains2 = transfersByStation.get(transferStation1);
         System.out.println("Station 1: " + transferStation1);
+        System.out.println("Possible Trains 2: " + possibleTrains2);
         int num = rand.nextInt(possibleTrains2.size());
         while(train1 == (char)possibleTrains2.get(num)) {
             num = rand.nextInt(possibleTrains2.size());
@@ -194,6 +179,10 @@ public class Main {
         String transferStation2 = possibleTransfers2.get(num);
         System.out.println("Station 2: " + transferStation2);
 
+        if(transferStation2.contains("&")) {
+            transferStation2 = transferStation2.substring(0,transferStation2.indexOf('&')-1);
+        }
+
         // generate Train Line 3
         List<Character> possibleTrains3 = transfersByStation.get(transferStation2);
         num = rand.nextInt(possibleTrains3.size());
@@ -203,10 +192,49 @@ public class Main {
 
         char train3 = possibleTrains3.get(num);
 
-        // generation start
+        // generate start point
+        String start = generatePoint(train1, transferStation1);
 
-        return Character.toString(train1) + "->" + transferStation1 + "->" + 
+        // generate end point
+        String end = generatePoint(train3, transferStation2);
+
+
+        return start + "->" + Character.toString(train1) + "->" + transferStation1 + "->" + 
                 Character.toString(train2) + "->" + transferStation2 + "->" +
-                Character.toString(train3);
+                Character.toString(train3) + "->" + end;
     }
+
+    public static String generatePoint(char train, String transferStation) {
+        List<String> stations = linesByStation.get(train);
+
+        Random rand = new Random();
+        
+        int num = rand.nextInt(stations.size());
+        while(transferStation.equals(stations.get(num))) {
+            num = rand.nextInt(stations.size());
+        }
+
+        return stations.get(num);
+    }
+
+    // TODO : figure out how to use abstraction for parameters
+    public static void printHashMap(HashMap<Character, List<String>> map) { 
+        for(Character train : map.keySet()) {
+            // System.out.println(Character.toString(train) + " Train: " + printList(map.get(train)));
+            System.out.println(Character.toString(train) + " Train: " + map.get(train));
+            System.out.println();
+        }
+    }
+
+    public static String printList(List<String> lst) {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < lst.size()-1; i++) {
+            sb.append(lst.get(i) + ", ");
+        }
+
+        sb.append(lst.get(lst.size()-1));
+        
+        return sb.toString();
+    }
+
 }
