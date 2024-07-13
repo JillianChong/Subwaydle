@@ -5,7 +5,7 @@ L Train (Manhattan -> Brooklyn)
 3 Av
 1 Av 
 Bedford Av
-Lorimer St
+Metropolitan Av & Lorimer St
 Graham Av
 Grand St
 Montrose Av
@@ -19,7 +19,7 @@ Bushwick Av-Aberdeen St
 Broadway Junction 
 Atlantic Av
 Sutter Av
-Livonia Av
+Junius St & Livonia Av
 New Lots Av
 East 105 St
 Canarsie-Rockaway Pkwy 

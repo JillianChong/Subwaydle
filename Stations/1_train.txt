@@ -23,7 +23,7 @@ Cathedral Pkwy (110 St)
 66 St-Lincoln Center 
 59 St-Columbus Circle 
 50 St 
-Times Sq-42 St
+Times Sq–42 St & 42 St/Port Authority Bus Terminal
 34 St-Penn Station (E)
 28 St
 23 St
@@ -36,4 +36,4 @@ Franklin St
 Chambers St (W)
 WTC Cortlandt
 Rector St 
-South Ferry 
+South Ferry & Whitehall St-South Ferry

@@ -15,10 +15,10 @@ Tremont Av
 59 St-Columbus Circle 
 7 Av 
 47-50 Sts-Rockefeller Ctr 
-42 St-Bryant Park 
+42 St–Bryant Park & 5 Av
 34 St-Herald Sq 
 W 4 St-Washington Sq 
-Broadway-Lafayette St 
+Broadway–Lafayette St & Bleecker St
 Grand St 
 Atlantic Av-Barclays Ctr 
 36 St 
@@ -26,7 +26,7 @@ Atlantic Av-Barclays Ctr
 Fort Hamilton Pkwy 
 50 St
 55 St
-62 St 
+62 St & New Utrecht Av
 71 St
 79 St
 18 Av

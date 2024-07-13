@@ -1,9 +1,9 @@
 G Train (Queens -> Brooklyn)
-Court Sq
+Court Sq–23rd St & Court Sq
 21 St
 Greenpoint Av
 Nassau Av
-Metropolitan Av
+Metropolitan Av & Lorimer St
 Broadway 
 Flushing Av 
 Myrtle Willoughby Avs 
@@ -15,7 +15,7 @@ Hoyt-Schermerhorn
 Bergen St 
 Carroll St
 Smith-9 Sts
-4 Av-9 Sts 
+4 Av & 4 Av-9 Sts
 7 Av 
 15 St-Prospect Park 
 Fort Hamilton Pkwy 

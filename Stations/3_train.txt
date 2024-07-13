@@ -7,15 +7,15 @@ Harlem-148 St
 Central Park North (110 St)
 96 St
 72 St
-Times Square-42 St
+Times Sq–42 St & 42 St/Port Authority Bus Terminal
 34 St-Penn Station (E)
 14 St
 Chambers St (W)
-Park Place
+Chambers St (M) & World Trade Center & Park Place & Cortlandt St
 Fulton St
 Wall St
 Clark St
-Borough Hall 
+Borough Hall & Court St
 Hoyt St
 Nevins St
 Atlantic Av-Barclays Ctr
@@ -29,7 +29,7 @@ Crown Heights-Utica Av
 Sutter Ave-Rutland Rd
 Saratoga Av
 Rockaway Av
-Junius St
+Junius St & Livonia Av
 Pennsylvania Av
 Van Siclen Av
 New Lots Av

@@ -6,11 +6,11 @@ Broadway
 36 Av
 39 Av
 Queensboro Plaza
-Lexington Av/59 St 
+Lexington Av/59 St & Lexington Av/63 St & 59 St
 5 Av/59 St
 57 St-7 Av
 49 St
-Times Sq-42 St
+Times Sq–42 St & 42 St/Port Authority Bus Terminal
 34 St-Herald Sq 
 14 St-Union Sq 
 Canal St (E)
@@ -19,7 +19,7 @@ Atlantic Av-Barclays Ctr
 59 St
 8 Av
 Fort Hamilton Pkwy 
-New Utrecht Av 
+62 St & New Utrecht Av
 18 Av
 20 Av
 Bay Pkwy 

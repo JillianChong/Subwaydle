@@ -17,10 +17,10 @@ Jackson Av
 138 St-Grand Concourse 
 125 St 
 86 St
-59 St
+Lexington Av/59 St & Lexington Av/63 St & 59 St
 Grand Central-42 St
 14 St-Union Sq
-Brooklyn Bridge-City Hall 
+Brooklyn Bridge–City Hall & Chambers St (E)
 Fulton St
 Wall St
 Bowling Green 
@@ -33,7 +33,7 @@ Burke Av
 Allerton Av
 Pelham Pkwy
 Bronx Park East
-Borough Hall 
+Borough Hall & Court St
 Nevins St
 Atlantic Av-Barclays Ctr 
 Franklin Av-Medgar Evers College

@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     // String : train, List<String> : stations
@@ -146,52 +148,102 @@ public class Main {
         }
     }
 
+    public static String findTransferStation(char train) {
+        Random rand = new Random();
+
+        List<String> possibleTransfers = transfersByLine.get(train);
+        String transferStation = possibleTransfers.get(rand.nextInt(possibleTransfers.size()));
+
+        if(transferStation.contains("&")) {
+            transferStation = transferStation.substring(0,transferStation.indexOf('&')-1);
+        }
+
+        return transferStation;
+    }
+
+    public static char generateTrain(List<Character> possibleTrains, char[] currentTrains) {
+        Random rand = new Random(); // TODO: Is this actually randomizing?
+
+        int num = rand.nextInt(possibleTrains.size());
+        while(Arrays.binarySearch(currentTrains, (char)possibleTrains.get(num)) > -1) {
+            num = rand.nextInt(possibleTrains.size());
+        }
+
+        return (char)possibleTrains.get(num);
+    }
+
+    public static String generatePoint(char train, String transferStation) {
+        List<String> stations = linesByStation.get(train);
+
+        Random rand = new Random();
+        
+        int num = rand.nextInt(stations.size());
+        while(transferStation.equals(stations.get(num))) {
+            num = rand.nextInt(stations.size());
+        }
+
+        return stations.get(num);
+    }
+
+    public static void addToRoute(List<String> trainLine, String start, String end) {
+        int startIndex = trainLine.indexOf(start);
+        int endIndex = trainLine.indexOf(end);
+
+        if(startIndex < endIndex) {
+            for(int i = startIndex; i <= endIndex; i++) {
+                stationsPassed.add(trainLine.get(i));
+            }
+        } else {
+            for(int i = startIndex; i >= endIndex; i--) {
+                stationsPassed.add(trainLine.get(i));
+            }            
+        }
+    }
+
     public static String generatePath() {
         Random rand = new Random();
 
         // generate Train Line 1
         char train1 = trains[rand.nextInt(trains.length)];
 
-        // generate Transfer 1
-        List<String> possibleTransfers1 = transfersByLine.get(train1);
-        String transferStation1 = possibleTransfers1.get(rand.nextInt(possibleTransfers1.size()));
+        System.out.println("TRAIN 1: " + train1);
 
-        if(transferStation1.contains("&")) {
-            transferStation1 = transferStation1.substring(0,transferStation1.indexOf('&')-1);
-        }
+        // generate Transfer 1
+        String transferStation1 = findTransferStation(train1);
+
+        System.out.println("TRANSFER STATION 1: " + transferStation1);
 
         // generate start point
         String start = generatePoint(train1, transferStation1);
+
+        System.out.println("START: " + start);
         List<String> train1Line = linesByStation.get(train1);
 
-        // create currentRoute
-        int startIndex = train1Line.indexOf(start); // TODO : NEED TO FIX DUPLICATE NAMES
-        int transferIndex = train1Line.indexOf(transferStation1);
+        System.out.println(train1Line.indexOf(transferStation1));
 
-        if(startIndex < transferIndex) {
-            for(int i = startIndex; i <= transferIndex; i++) {
-                stationsPassed.add(train1Line.get(i));
-            }
-        } else {
-            for(int i = startIndex; i >= transferIndex; i--) {
-                stationsPassed.add(train1Line.get(i));
-            }            
-        }
+        // System.out.println("START: " + start + " -> " + train1Line);
+
+        // create currentRoute
+        // TODO : NEED TO FIX DUPLICATE NAMES, fix transferStation addedd twice?
+        addToRoute(train1Line, start, transferStation1);
 
         // generate Train Line 2
         List<Character> possibleTrains2 = transfersByStation.get(transferStation1);
-        System.out.println("Station 1: " + transferStation1);
-        System.out.println("Possible Trains 2: " + possibleTrains2);
-        int num = rand.nextInt(possibleTrains2.size());
-        while(train1 == (char)possibleTrains2.get(num)) {
-            num = rand.nextInt(possibleTrains2.size());
-        }
+        // System.out.println("Station 1: " + transferStation1);
+        // System.out.println("Possible Trains 2: " + possibleTrains2);
+        // int num = rand.nextInt(possibleTrains2.size());
+        // while(train1 == (char)possibleTrains2.get(num)) {
+        //     num = rand.nextInt(possibleTrains2.size());
+        // }
 
-        char train2 = possibleTrains2.get(num);
+        // char train2 = possibleTrains2.get(num);
+        char train2 = generateTrain(possibleTrains2, new char[]{train1});
+
+        System.out.println("TRAIN 2: " + train2);
 
         // generate Transfer 2
         List<String> possibleTransfers2 = transfersByLine.get(train2);
-        num = rand.nextInt(possibleTransfers2.size());
+        int num = rand.nextInt(possibleTransfers2.size());
         while(stationsPassed.contains(possibleTransfers2.get(num)) || transferStation1.equals(possibleTransfers2.get(num))) {
             num = rand.nextInt(possibleTransfers2.size());
         }
@@ -206,8 +258,8 @@ public class Main {
         List<String> train2Line = linesByStation.get(train2);
 
         // create currentRoute
-        startIndex = train2Line.indexOf(transferStation1); // TODO : NEED TO FIX DUPLICATE NAMES
-        transferIndex = train2Line.indexOf(transferStation2);
+        int startIndex = train2Line.indexOf(transferStation1); // TODO : NEED TO FIX DUPLICATE NAMES
+        int transferIndex = train2Line.indexOf(transferStation2);
 
         if(startIndex < transferIndex) {
             for(int i = startIndex; i <= transferIndex; i++) {
@@ -236,37 +288,10 @@ public class Main {
                 Character.toString(train3) + "->" + end;
     }
 
-    public static String generatePoint(char train, String transferStation) {
-        List<String> stations = linesByStation.get(train);
-
-        Random rand = new Random();
-        
-        int num = rand.nextInt(stations.size());
-        while(transferStation.equals(stations.get(num))) {
-            num = rand.nextInt(stations.size());
-        }
-
-        return stations.get(num);
-    }
-
-    // TODO : figure out how to use abstraction for parameters
-    public static void printHashMap(HashMap<Character, List<String>> map) { 
-        for(Character train : map.keySet()) {
-            // System.out.println(Character.toString(train) + " Train: " + printList(map.get(train)));
-            System.out.println(Character.toString(train) + " Train: " + map.get(train));
+    public static <K, V> void printHashMap(HashMap<K, V> map) { 
+        for(Map.Entry<K, V> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + " Train: " + entry.getValue());
             System.out.println();
         }
     }
-
-    public static String printList(List<String> lst) {
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < lst.size()-1; i++) {
-            sb.append(lst.get(i) + ", ");
-        }
-
-        sb.append(lst.get(lst.size()-1));
-        
-        return sb.toString();
-    }
-
 }
