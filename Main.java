@@ -31,7 +31,13 @@ public class Main {
         sortTransfers();
         String path = generatePath();
         System.out.println(path);
+        // char train = 'R';
+        // List<String> stations = linesByStation.get(train);
+        // System.out.println(stations);
+        // System.out.println(stations.indexOf("34 St-Herald Sq"));
+
         // printHashMap(linesByStation);
+        // System.out.println(linesByStation.size());
         // System.out.println(transfersByStation.size());
         // for(String str : transfersByStation.keySet()) {
         //     System.out.println(str + " " + transfersByStation.get(str));
@@ -53,7 +59,7 @@ public class Main {
 
                 String line = br.readLine();
                 while(line != null) {
-                    stations.add(line);
+                    stations.add(line.strip());
                     line = br.readLine();
                 }
 
@@ -84,10 +90,10 @@ public class Main {
                 for(char train : trainList.toCharArray()) {
                     if(transfersByLine.containsKey(train)) {
                         List<String> stations = transfersByLine.get(train);
-                        stations.add(stationName);
+                        stations.add(stationName.strip());
                     } else {
                         List<String> stations = new ArrayList<>();
-                        stations.add(stationName);
+                        stations.add(stationName.strip());
                         transfersByLine.put(train, stations);
                     }
                 }
@@ -109,9 +115,23 @@ public class Main {
 
             String line = br.readLine();
             while(line != null) {
-                if(line.indexOf("&") > -1) {
+            //     if(line.indexOf("&") > -1) {
+            //         int index = line.indexOf(" [");
+            //         String[] stations = line.substring(0, index).split("&");
+
+            //         List<Character> trainsAtStation = new ArrayList<>();
+            //         for(char ch : line.substring(index).toCharArray()) {
+            //             if(ch != ' ' && ch != ',' && ch != '[' && ch != ']') {
+            //                 trainsAtStation.add(ch);
+            //             }
+            //         }
+
+            //         for(String station : stations) {
+            //             transfersByStation.put(station.strip(), trainsAtStation);
+            //         }
+            //     } else {
                     int index = line.indexOf(" [");
-                    String[] stations = line.substring(0, index).split("&");
+                    String stationName = line.substring(0,index).strip();
 
                     List<Character> trainsAtStation = new ArrayList<>();
                     for(char ch : line.substring(index).toCharArray()) {
@@ -120,22 +140,8 @@ public class Main {
                         }
                     }
 
-                    for(String station : stations) {
-                        transfersByStation.put(station.strip(), trainsAtStation);
-                    }
-                } else {
-                    int index = line.indexOf(" [");
-                    String stationName = line.substring(0,index);
-
-                    List<Character> trainsAtStation = new ArrayList<>();
-                    for(char ch : line.substring(index).toCharArray()) {
-                        if(ch != ' ' && ch != ',' && ch != '[' && ch != ']') {
-                            trainsAtStation.add(ch);
-                        }
-                    }
-
-                    transfersByStation.put(stationName, trainsAtStation);
-                }
+                    transfersByStation.put(stationName.strip(), trainsAtStation);
+                // }
 
         
                 line = br.readLine();
@@ -154,9 +160,9 @@ public class Main {
         List<String> possibleTransfers = transfersByLine.get(train);
         String transferStation = possibleTransfers.get(rand.nextInt(possibleTransfers.size()));
 
-        if(transferStation.contains("&")) {
-            transferStation = transferStation.substring(0,transferStation.indexOf('&')-1);
-        }
+        // if(transferStation.contains("&")) {
+        //     transferStation = transferStation.substring(0,transferStation.indexOf('&')-1);
+        // }
 
         return transferStation;
     }
@@ -186,6 +192,9 @@ public class Main {
     }
 
     public static void addToRoute(List<String> trainLine, String start, String end) {
+        System.out.println("START : " + start);
+        System.out.println("END : " + end);
+        System.out.println(trainLine);
         int startIndex = trainLine.indexOf(start);
         int endIndex = trainLine.indexOf(end);
 
@@ -251,9 +260,9 @@ public class Main {
         String transferStation2 = possibleTransfers2.get(num);
         System.out.println("Station 2: " + transferStation2);
 
-        if(transferStation2.contains("&")) {
-            transferStation2 = transferStation2.substring(0,transferStation2.indexOf('&')-1);
-        }
+        // if(transferStation2.contains("&")) {
+        //     transferStation2 = transferStation2.substring(0,transferStation2.indexOf('&')-1);
+        // }
 
         List<String> train2Line = linesByStation.get(train2);
 
