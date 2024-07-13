@@ -21,6 +21,8 @@ public class Main {
 
     public static char[] trains = new char[]{'1', '2', '3', '4', '5', '6', '7', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'J', 'L', 'M', 'N', 'Q', 'R', 'W', 'Z'};
 
+    public static List<String> stationsPassed = new ArrayList<>();
+
     public static void main(String[] args) {
         sortByTransfers();
         sortByLines();
@@ -158,6 +160,24 @@ public class Main {
             transferStation1 = transferStation1.substring(0,transferStation1.indexOf('&')-1);
         }
 
+        // generate start point
+        String start = generatePoint(train1, transferStation1);
+        List<String> train1Line = linesByStation.get(train1);
+
+        // create currentRoute
+        int startIndex = train1Line.indexOf(start); // TODO : NEED TO FIX DUPLICATE NAMES
+        int transferIndex = train1Line.indexOf(transferStation1);
+
+        if(startIndex < transferIndex) {
+            for(int i = startIndex; i <= transferIndex; i++) {
+                stationsPassed.add(train1Line.get(i));
+            }
+        } else {
+            for(int i = startIndex; i >= transferIndex; i--) {
+                stationsPassed.add(train1Line.get(i));
+            }            
+        }
+
         // generate Train Line 2
         List<Character> possibleTrains2 = transfersByStation.get(transferStation1);
         System.out.println("Station 1: " + transferStation1);
@@ -172,7 +192,7 @@ public class Main {
         // generate Transfer 2
         List<String> possibleTransfers2 = transfersByLine.get(train2);
         num = rand.nextInt(possibleTransfers2.size());
-        while(transferStation1.equals(possibleTransfers2.get(num))) {
+        while(stationsPassed.contains(possibleTransfers2.get(num)) || transferStation1.equals(possibleTransfers2.get(num))) {
             num = rand.nextInt(possibleTransfers2.size());
         }
 
@@ -181,6 +201,22 @@ public class Main {
 
         if(transferStation2.contains("&")) {
             transferStation2 = transferStation2.substring(0,transferStation2.indexOf('&')-1);
+        }
+
+        List<String> train2Line = linesByStation.get(train2);
+
+        // create currentRoute
+        startIndex = train2Line.indexOf(transferStation1); // TODO : NEED TO FIX DUPLICATE NAMES
+        transferIndex = train2Line.indexOf(transferStation2);
+
+        if(startIndex < transferIndex) {
+            for(int i = startIndex; i <= transferIndex; i++) {
+                stationsPassed.add(train2Line.get(i));
+            }
+        } else {
+            for(int i = startIndex; i >= transferIndex; i--) {
+                stationsPassed.add(train2Line.get(i));
+            }            
         }
 
         // generate Train Line 3
@@ -192,12 +228,8 @@ public class Main {
 
         char train3 = possibleTrains3.get(num);
 
-        // generate start point
-        String start = generatePoint(train1, transferStation1);
-
         // generate end point
         String end = generatePoint(train3, transferStation2);
-
 
         return start + "->" + Character.toString(train1) + "->" + transferStation1 + "->" + 
                 Character.toString(train2) + "->" + transferStation2 + "->" +
