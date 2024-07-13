@@ -154,15 +154,21 @@ public class Main {
         }
     }
 
-    public static String findTransferStation(char train) {
+    public static String findTransferStation(char train, String previousTransfer) {
         Random rand = new Random();
 
         List<String> possibleTransfers = transfersByLine.get(train);
-        String transferStation = possibleTransfers.get(rand.nextInt(possibleTransfers.size()));
+
+        int num = rand.nextInt(possibleTransfers.size());
+        String transferStation = possibleTransfers.get(num);
 
         // if(transferStation.contains("&")) {
         //     transferStation = transferStation.substring(0,transferStation.indexOf('&')-1);
         // }
+
+        while(stationsPassed.contains(transferStation) || previousTransfer.equals(transferStation)) {
+            num = rand.nextInt(possibleTransfers.size());
+        }
 
         return transferStation;
     }
@@ -218,7 +224,7 @@ public class Main {
         System.out.println("TRAIN 1: " + train1);
 
         // generate Transfer 1
-        String transferStation1 = findTransferStation(train1);
+        String transferStation1 = findTransferStation(train1, "");
 
         System.out.println("TRANSFER STATION 1: " + transferStation1);
 
@@ -238,56 +244,53 @@ public class Main {
 
         // generate Train Line 2
         List<Character> possibleTrains2 = transfersByStation.get(transferStation1);
-        // System.out.println("Station 1: " + transferStation1);
-        // System.out.println("Possible Trains 2: " + possibleTrains2);
-        // int num = rand.nextInt(possibleTrains2.size());
-        // while(train1 == (char)possibleTrains2.get(num)) {
-        //     num = rand.nextInt(possibleTrains2.size());
-        // }
 
-        // char train2 = possibleTrains2.get(num);
         char train2 = generateTrain(possibleTrains2, new char[]{train1});
 
         System.out.println("TRAIN 2: " + train2);
 
         // generate Transfer 2
-        List<String> possibleTransfers2 = transfersByLine.get(train2);
-        int num = rand.nextInt(possibleTransfers2.size());
-        while(stationsPassed.contains(possibleTransfers2.get(num)) || transferStation1.equals(possibleTransfers2.get(num))) {
-            num = rand.nextInt(possibleTransfers2.size());
-        }
+        // List<String> possibleTransfers2 = transfersByLine.get(train2);
+        // int num = rand.nextInt(possibleTransfers2.size());
+        // while(stationsPassed.contains(possibleTransfers2.get(num)) || transferStation1.equals(possibleTransfers2.get(num))) {
+        //     num = rand.nextInt(possibleTransfers2.size());
+        // }
 
-        String transferStation2 = possibleTransfers2.get(num);
-        System.out.println("Station 2: " + transferStation2);
+        // String transferStation2 = possibleTransfers2.get(num);
+        // System.out.println("Station 2: " + transferStation2);
 
+        String transferStation2 = findTransferStation(train2, transferStation1);
         // if(transferStation2.contains("&")) {
         //     transferStation2 = transferStation2.substring(0,transferStation2.indexOf('&')-1);
         // }
 
         List<String> train2Line = linesByStation.get(train2);
 
-        // create currentRoute
-        int startIndex = train2Line.indexOf(transferStation1); // TODO : NEED TO FIX DUPLICATE NAMES
-        int transferIndex = train2Line.indexOf(transferStation2);
+        // create currentRouteß
+        addToRoute(train2Line, transferStation1, transferStation2);
+        // int startIndex = train2Line.indexOf(transferStation1); // TODO : NEED TO FIX DUPLICATE NAMES
+        // int transferIndex = train2Line.indexOf(transferStation2);
 
-        if(startIndex < transferIndex) {
-            for(int i = startIndex; i <= transferIndex; i++) {
-                stationsPassed.add(train2Line.get(i));
-            }
-        } else {
-            for(int i = startIndex; i >= transferIndex; i--) {
-                stationsPassed.add(train2Line.get(i));
-            }            
-        }
+        // if(startIndex < transferIndex) {
+        //     for(int i = startIndex; i <= transferIndex; i++) {
+        //         stationsPassed.add(train2Line.get(i));
+        //     }
+        // } else {
+        //     for(int i = startIndex; i >= transferIndex; i--) {
+        //         stationsPassed.add(train2Line.get(i));
+        //     }            
+        // }
 
         // generate Train Line 3
         List<Character> possibleTrains3 = transfersByStation.get(transferStation2);
-        num = rand.nextInt(possibleTrains3.size());
-        while(train1 == (char)possibleTrains3.get(num) || train2 == (char)possibleTrains3.get(num)) {
-            num = rand.nextInt(possibleTrains3.size());
-        }
+        // int num = rand.nextInt(possibleTrains3.size());
+        // while(train1 == (char)possibleTrains3.get(num) || train2 == (char)possibleTrains3.get(num)) {
+        //     num = rand.nextInt(possibleTrains3.size());
+        // }
 
-        char train3 = possibleTrains3.get(num);
+        // char train3 = possibleTrains3.get(num);
+
+        char train3 = generateTrain(possibleTrains3, new char[]{train1, train2});
 
         // generate end point
         String end = generatePoint(train3, transferStation2);
