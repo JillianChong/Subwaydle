@@ -151,4 +151,17 @@ public class MainTest {
         currentTrains3.add('4');
         assertEquals("No train left test", '0', Main.generateTrain(possibleTrains3, currentTrains3));
     }
+
+    @Test
+    public void generatePointTest() {
+        String generatedPoint1 = Main.generatePoint('F', "Parsons Blvd");
+        assertTrue("Station not found test 1", map.getStations('F').contains(generatedPoint1));
+        assertFalse("Station not found test 2", map.getStations('1').contains(generatedPoint1));
+        assertNotEquals("Inequal stations test 1", generatedPoint1, "Parsons Blvd");
+
+        String generatedPoint2 = Main.generatePoint('7', "61 St-Woodside");
+        assertTrue("Station not found test 2", map.getStations('7').contains(generatedPoint2));
+        assertFalse("Station not found test 4", map.getStations('J').contains(generatedPoint2));
+        assertNotEquals("Inequal stations test 2", generatedPoint2, "61 St-Woodside");
+    }
 }

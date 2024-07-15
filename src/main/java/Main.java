@@ -14,11 +14,9 @@ public class Main {
 
     public static List<String> stationsPassed = new ArrayList<>();
 
-    public static SubwayMap map;
+    public static SubwayMap map = new SubwayMap();;
 
     public static void main(String[] args) {
-        map = new SubwayMap();
-
         String path = generatePath();
         System.out.println(path);
     }
@@ -42,7 +40,7 @@ public class Main {
     }
 
     public static String generatePoint(char train, String transferStation) {
-        List<String> stations = map.getStations(train);
+        List<String> stations = map.getStations(train); // catch an exception?
 
         Random rand = new Random();
         
