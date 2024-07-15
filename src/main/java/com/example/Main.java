@@ -1,147 +1,32 @@
 package src.main.java.com.example;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.List;
 import java.util.Random;
+
+import src.main.java.SubwayMap;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
-    // String : train, List<String> : stations
-    // Stores a list of stations for each line
-    public static HashMap<Character, List<String>> linesByStation = new HashMap<>();
-    // String : train line, List<String> : stations
-    // Stores a list of transfer stations for each line
-    public static HashMap<Character, List<String>> transfersByLine = new HashMap<>();
-    // String : station name, List<Character> : list of lines available --> duplicate stations will be listed separately (deal with connections)
-    // Stores a list of lines available at each transfer station
-    public static HashMap<String, List<Character>> transfersByStation = new HashMap<>();
 
     public static char[] trains = new char[]{'1', '2', '3', '4', '5', '6', '7', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'J', 'L', 'M', 'N', 'Q', 'R', 'W', 'Z'};
 
     public static List<String> stationsPassed = new ArrayList<>();
 
+    public static SubwayMap map = new SubwayMap();
+
     public static void main(String[] args) {
-        sortByTransfers();
-        sortByLines();
-        sortTransfers();
         String path = generatePath();
         System.out.println(path);
-        // char train = 'A';
-        // List<String> stations = linesByStation.get(train);
-        // System.out.println(stations.size());
-        // System.out.println(stations.indexOf("Canal St (W)"));
-
-        // printHashMap(linesByStation);
-        // System.out.println(linesByStation.size());
-        // System.out.println(transfersByStation.size());
-        // for(String str : transfersByStation.keySet()) {
-        //     System.out.println(str + " " + transfersByStation.get(str));
-        // }
-    }
-
-    public static void sortByLines() {
-        File file;
-        BufferedReader br;
-        try {
-            for(char train : trains) {
-                String filePath = "src/Stations/" + Character.toString(train) + "_train.txt";
-                file = new File(filePath);
-
-                br = new BufferedReader(new FileReader(file));
-                br.readLine();
-
-                List<String> stations = new ArrayList<>();
-
-                String line = br.readLine();
-                while(line != null) {
-                    stations.add(line.strip());
-                    line = br.readLine();
-                }
-
-                linesByStation.put(train, stations);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("TRAIN FILE NOT FOUND");
-        } catch (IOException e) {
-            System.out.println("IO EXCEPTION");
-        }
-    }
-
-    public static void sortByTransfers() {
-        File file = new File("src/Transfers/transfers_copy.txt");
-        BufferedReader br;
-
-        try {
-            br = new BufferedReader(new FileReader(file));
-
-            String line = br.readLine();
-            while(line != null) {
-                int index = line.indexOf("[");
-                String stationName = line.substring(0, index-1);
-                String trainList = line.substring(index+1, line.length()-1);
-                trainList = trainList.replaceAll(", ", "");
-                trainList = trainList.replaceAll("]", "");
-
-                for(char train : trainList.toCharArray()) {
-                    if(transfersByLine.containsKey(train)) {
-                        List<String> stations = transfersByLine.get(train);
-                        stations.add(stationName.strip());
-                    } else {
-                        List<String> stations = new ArrayList<>();
-                        stations.add(stationName.strip());
-                        transfersByLine.put(train, stations);
-                    }
-                }
-
-                line = br.readLine();
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("TRANSFERS FILE NOT FOUND");
-        } catch (IOException e) {
-            System.out.println("IO EXCEPTION");
-        }
-    }
-
-    // TODO : COMBINE THIS WITH SORTBYTRANSFERS()
-    public static void sortTransfers() {
-        try {
-            File file = new File("src/Transfers/transfers_copy.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));  
-
-            String line = br.readLine();
-            while(line != null) {
-                int index = line.indexOf(" [");
-                String stationName = line.substring(0,index).strip();
-
-                List<Character> trainsAtStation = new ArrayList<>();
-                for(char ch : line.substring(index).toCharArray()) {
-                    if(ch != ' ' && ch != ',' && ch != '[' && ch != ']') {
-                        trainsAtStation.add(ch);
-                    }
-                }
-
-                transfersByStation.put(stationName.strip(), trainsAtStation);
-
-                line = br.readLine();
-            }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("TRANSFERS FILE NOT FOUND");
-        } catch (IOException e) {
-            System.out.println("IO EXCEPTION");
-        }
     }
 
     public static String findTransferStation(char train, String previousTransfer) {
         Random rand = new Random();
 
-        List<String> possibleTransfers = transfersByLine.get(train);
+        List<String> possibleTransfers = map.getTransfers(train);
         System.out.println(possibleTransfers);
 
         int num = rand.nextInt(possibleTransfers.size());
@@ -166,7 +51,7 @@ public class Main {
     }
 
     public static String generatePoint(char train, String transferStation) {
-        List<String> stations = linesByStation.get(train);
+        List<String> stations = map.getStations(train);
 
         Random rand = new Random();
         
@@ -208,13 +93,13 @@ public class Main {
         String start = generatePoint(train1, transferStation1);
         System.out.println("START: " + start);
 
-        List<String> train1Line = linesByStation.get(train1);
+        List<String> train1Line = map.getStations(train1);
 
         // create currentRoute
         addToRoute(train1Line, start, transferStation1);
 
         // generate Train Line 2
-        List<Character> possibleTrains2 = transfersByStation.get(transferStation1);
+        List<Character> possibleTrains2 = map.getTrains(transferStation1);
         char train2 = generateTrain(possibleTrains2, new char[]{train1});
         System.out.println("TRAIN 2: " + train2);
 
@@ -222,13 +107,13 @@ public class Main {
         String transferStation2 = findTransferStation(train2, transferStation1);
         System.out.println("TRANSFER 2: " + transferStation2);
 
-        List<String> train2Line = linesByStation.get(train2);
+        List<String> train2Line = map.getStations(train2);
 
         // create currentRouteß
         addToRoute(train2Line, transferStation1, transferStation2);
 
         // generate Train Line 3
-        List<Character> possibleTrains3 = transfersByStation.get(transferStation2);
+        List<Character> possibleTrains3 = map.getTrains(transferStation2);
 
         char train3 = generateTrain(possibleTrains3, new char[]{train1, train2});
         System.out.println("TRAIN 3: " + train3);
