@@ -164,4 +164,59 @@ public class MainTest {
         assertFalse("Station not found test 4", map.getStations('J').contains(generatedPoint2));
         assertNotEquals("Inequal stations test 2", generatedPoint2, "61 St-Woodside");
     }
+
+    @Test
+    public void findTransferStationTest() {
+        List<String> stationsSeen1 = new ArrayList<>();
+        Collections.addAll(stationsSeen1, "Sutphin Blvd", "Briarwood", "Kew Gardens-Union Tpke", "75 Av", 
+            "Forest Hills-71 Av", "Jackson Hts-Roosevelt Av & 74 St-Broadway", "21 St-Queensbridge");
+
+        for(int i = 0; i < 20; i++) {
+            String transferStation1 = Main.findTransferStation('F', "Queensboro Plaza", stationsSeen1);
+            assertFalse(stationsSeen1.contains(transferStation1));
+        }
+
+        List<String> stationsSeen2 = new ArrayList<>();
+        Collections.addAll(stationsSeen2, "Broadway Junction", "Brooklyn Bridge-City Hall & Chambers St (E)", 
+            "Canal St (E)", "Delancey St-Essex St", "Fulton St", "Myrtle Av");
+        String transferStation2 = Main.findTransferStation('J', "Fulton St", stationsSeen2);
+        assertEquals("Only one station left", "Sutphin Blvd-Archer Av-JFK Airport", transferStation2);
+        
+        stationsSeen2.add("Sutphin Blvd-Archer Av-JFK Airport");
+        transferStation2 = Main.findTransferStation('J', "Fulton St", stationsSeen2);
+        assertEquals("No transfer stations found", "0", transferStation2);
+    }
+
+    @Test
+    public void addToRouteTest() {
+        List<String> route1 = Main.addToRoute('R', "65 St", "Lexington Av/59 St & Lexington Av/63 St & 59 St");
+
+        List<String> expectedRoute1 = new ArrayList<>();
+        Collections.addAll(expectedRoute1, "Northern Blvd", "46 St", "Steinway St", "36 St", "Queens Plaza");
+
+        assertEquals(route1, expectedRoute1);
+
+        String removed = expectedRoute1.get(0);
+        expectedRoute1.remove(0);
+        assertNotEquals("One station missing test", route1, expectedRoute1);
+
+        expectedRoute1.add(removed);
+        assertNotEquals("Stations out of order", route1, expectedRoute1);
+
+        List<String> route2 = Main.addToRoute('G', "Bedford-Nostrand Avs", "Bedford-Nostrand Avs");
+
+        assertTrue(route2.size() == 0);
+        assertFalse(route2.contains("Bedford-Nostrand Avs"));
+        assertFalse(route2.contains("Classon Av"));
+
+        List<String> route3 = Main.addToRoute('6', "96 St", "Cypress Av");
+
+        List<String> expectedRoute3 = new ArrayList<>();
+        Collections.addAll(expectedRoute3, "103 St", "110 St", "116 St", "125 St", "3 Av-138 St", "Brook Av");
+
+        assertEquals("Size test", 6, route3.size());
+        assertEquals("Reverse order test", route3, expectedRoute3);
+        assertEquals("Order test 1", "103 St", route3.get(0));
+        assertEquals("Order test 2", "Brook Av", route3.get(route3.size()-1));
+    }
 }

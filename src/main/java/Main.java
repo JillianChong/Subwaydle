@@ -10,9 +10,7 @@ import java.util.Map;
 
 public class Main {
 
-    public static char[] trains = new char[]{'1', '2', '3', '4', '5', '6', '7', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'J', 'L', 'M', 'N', 'Q', 'R', 'W', 'Z'};
-
-    public static List<String> stationsPassed = new ArrayList<>();
+    public static char[] trains = new char[]{'1', '2', '3', '4', '5', '6', '7', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'J', 'L', 'M', 'N', 'Q', 'R', 'W'/*, 'Z' */};
 
     public static SubwayMap map = new SubwayMap();;
 
@@ -36,6 +34,7 @@ public class Main {
         }
 
         int num = rand.nextInt(currentPossibilities.size());
+
         return currentPossibilities.get(num);
     }
 
@@ -52,89 +51,102 @@ public class Main {
         return stations.get(num);
     }
 
-    public static String findTransferStation(char train, String previousTransfer) {
+    public static String findTransferStation(char train, String previousTransfer, List<String> stationsSeen) {
         Random rand = new Random();
 
         List<String> possibleTransfers = map.getTransfers(train);
-        System.out.println(possibleTransfers);
+        // System.out.println(possibleTransfers);
 
-        int num = rand.nextInt(possibleTransfers.size());
-        String transferStation = possibleTransfers.get(num);
-
-        while(stationsPassed.contains(transferStation) || previousTransfer.equals(transferStation)) {
-            num = rand.nextInt(possibleTransfers.size());
+        List<String> currentPossibilities = new ArrayList<>();
+        for(int i = 0; i < possibleTransfers.size(); i++) {
+            String consideringStation = possibleTransfers.get(i);
+            if(!(stationsSeen.contains(consideringStation) || previousTransfer.equals(consideringStation))) {
+                currentPossibilities.add(consideringStation);
+            }
         }
 
-        return transferStation;
+        if(currentPossibilities.isEmpty()) {
+            return "0"; // no transfer stations found
+        }
+
+        int num = rand.nextInt(currentPossibilities.size());
+
+        return currentPossibilities.get(num);
     }
 
-    public static void addToRoute(List<String> trainLine, String start, String end) {
+    public static List<String> addToRoute(char train, String start, String end) { 
+
+        // TODO : MAKE EXCEPTION FOR STATION NOT FOUND -- add unit test for this
+        List<String> trainLine = map.getStations(train);
+        List<String> stationsSeen = new ArrayList<>();
+
         int startIndex = trainLine.indexOf(start);
         int endIndex = trainLine.indexOf(end);
 
         if(startIndex < endIndex) {
-            for(int i = startIndex; i <= endIndex; i++) {
-                stationsPassed.add(trainLine.get(i));
+            for(int i = startIndex+1; i < endIndex; i++) {
+                stationsSeen.add(trainLine.get(i));
             }
         } else {
-            for(int i = startIndex; i >= endIndex; i--) {
-                stationsPassed.add(trainLine.get(i));
+            for(int i = startIndex-1; i > endIndex; i--) {
+                stationsSeen.add(trainLine.get(i));
             }            
         }
+
+        return stationsSeen;
     }
 
-    public static String generatePath() {
+    public static String generatePath() { // make sure addRoutes is proper & includes transferStation
         Random rand = new Random();
 
         List<Character> currentTrains = new ArrayList<>();
+        List<String> stationsPassed = new ArrayList<>();
 
         // generate Train Line 1
         char train1 = trains[rand.nextInt(trains.length)];
         currentTrains.add(train1);
-        System.out.println("TRAIN 1: " + train1);
 
         // generate Transfer 1
-        String transferStation1 = findTransferStation(train1, "");
-        System.out.println("TRANFER 1: " + transferStation1);
+        String transferStation1 = findTransferStation(train1, "", stationsPassed);
 
         // generate start point
         String start = generatePoint(train1, transferStation1);
-        System.out.println("START: " + start);
 
-        List<String> train1Line = map.getStations(train1);
-
-        // create currentRoute
-        addToRoute(train1Line, start, transferStation1);
+        // create current route
+        stationsPassed.add(start);
+        stationsPassed.addAll(addToRoute(train1, start, transferStation1));
+        stationsPassed.add(transferStation1);
+        // System.out.println("PASS 1: " + stationsPassed);
 
         // generate Train Line 2
         List<Character> possibleTrains2 = map.getTrains(transferStation1);
         char train2 = generateTrain(possibleTrains2, currentTrains);
         currentTrains.add(train2);
-        System.out.println("TRAIN 2: " + train2);
 
         // generate Tranfer 2
-        String transferStation2 = findTransferStation(train2, transferStation1);
-        System.out.println("TRANSFER 2: " + transferStation2);
+        String transferStation2 = findTransferStation(train2, transferStation1, stationsPassed);
 
-        List<String> train2Line = map.getStations(train2);
-
-        // create currentRouteß
-        addToRoute(train2Line, transferStation1, transferStation2);
+        // add to current route
+        stationsPassed.addAll(addToRoute(train2, transferStation1, transferStation2));
+        stationsPassed.add(transferStation2);
+        // System.out.println("PASS 2: " + stationsPassed);
 
         // generate Train Line 3
         List<Character> possibleTrains3 = map.getTrains(transferStation2);
-
         char train3 = generateTrain(possibleTrains3, currentTrains);
         currentTrains.add(train3);
-        System.out.println("TRAIN 3: " + train3);
 
         // generate end point
         String end = generatePoint(train3, transferStation2);
-        System.out.println("END: " + end);
 
-        return start + "->" + Character.toString(train1) + "->" + transferStation1 + "->" + 
-                Character.toString(train2) + "->" + transferStation2 + "->" +
-                Character.toString(train3) + "->" + end;
+        // complete current route
+        stationsPassed.addAll(addToRoute(train3, transferStation2, end));
+        stationsPassed.add(end);
+        // System.out.println("PASS 3: " + stationsPassed);
+
+        return "START: " + start + " -> " + Character.toString(train1) + " -> " + transferStation1 + " -> " + 
+                Character.toString(train2) + " -> " + transferStation2 + " -> " +
+                Character.toString(train3) + " -> " + "END: " + end;
     }
 
     public static <K, V> void printHashMap(HashMap<K, V> map) { 
