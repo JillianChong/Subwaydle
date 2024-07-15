@@ -1,3 +1,4 @@
+package src.main.java.com.example;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,10 +32,10 @@ public class Main {
         sortTransfers();
         String path = generatePath();
         System.out.println(path);
-        // char train = 'R';
+        // char train = 'A';
         // List<String> stations = linesByStation.get(train);
-        // System.out.println(stations);
-        // System.out.println(stations.indexOf("34 St-Herald Sq"));
+        // System.out.println(stations.size());
+        // System.out.println(stations.indexOf("Canal St (W)"));
 
         // printHashMap(linesByStation);
         // System.out.println(linesByStation.size());
@@ -49,7 +50,7 @@ public class Main {
         BufferedReader br;
         try {
             for(char train : trains) {
-                String filePath = "./Stations/" + Character.toString(train) + "_train.txt";
+                String filePath = "src/Stations/" + Character.toString(train) + "_train.txt";
                 file = new File(filePath);
 
                 br = new BufferedReader(new FileReader(file));
@@ -73,7 +74,7 @@ public class Main {
     }
 
     public static void sortByTransfers() {
-        File file = new File("./Transfers/transfers_copy.txt");
+        File file = new File("src/Transfers/transfers_copy.txt");
         BufferedReader br;
 
         try {
@@ -110,40 +111,23 @@ public class Main {
     // TODO : COMBINE THIS WITH SORTBYTRANSFERS()
     public static void sortTransfers() {
         try {
-            File file = new File("./Transfers/transfers_copy.txt");
+            File file = new File("src/Transfers/transfers_copy.txt");
             BufferedReader br = new BufferedReader(new FileReader(file));  
 
             String line = br.readLine();
             while(line != null) {
-            //     if(line.indexOf("&") > -1) {
-            //         int index = line.indexOf(" [");
-            //         String[] stations = line.substring(0, index).split("&");
+                int index = line.indexOf(" [");
+                String stationName = line.substring(0,index).strip();
 
-            //         List<Character> trainsAtStation = new ArrayList<>();
-            //         for(char ch : line.substring(index).toCharArray()) {
-            //             if(ch != ' ' && ch != ',' && ch != '[' && ch != ']') {
-            //                 trainsAtStation.add(ch);
-            //             }
-            //         }
-
-            //         for(String station : stations) {
-            //             transfersByStation.put(station.strip(), trainsAtStation);
-            //         }
-            //     } else {
-                    int index = line.indexOf(" [");
-                    String stationName = line.substring(0,index).strip();
-
-                    List<Character> trainsAtStation = new ArrayList<>();
-                    for(char ch : line.substring(index).toCharArray()) {
-                        if(ch != ' ' && ch != ',' && ch != '[' && ch != ']') {
-                            trainsAtStation.add(ch);
-                        }
+                List<Character> trainsAtStation = new ArrayList<>();
+                for(char ch : line.substring(index).toCharArray()) {
+                    if(ch != ' ' && ch != ',' && ch != '[' && ch != ']') {
+                        trainsAtStation.add(ch);
                     }
+                }
 
-                    transfersByStation.put(stationName.strip(), trainsAtStation);
-                // }
+                transfersByStation.put(stationName.strip(), trainsAtStation);
 
-        
                 line = br.readLine();
             }
 
@@ -158,13 +142,10 @@ public class Main {
         Random rand = new Random();
 
         List<String> possibleTransfers = transfersByLine.get(train);
+        System.out.println(possibleTransfers);
 
         int num = rand.nextInt(possibleTransfers.size());
         String transferStation = possibleTransfers.get(num);
-
-        // if(transferStation.contains("&")) {
-        //     transferStation = transferStation.substring(0,transferStation.indexOf('&')-1);
-        // }
 
         while(stationsPassed.contains(transferStation) || previousTransfer.equals(transferStation)) {
             num = rand.nextInt(possibleTransfers.size());
@@ -198,9 +179,6 @@ public class Main {
     }
 
     public static void addToRoute(List<String> trainLine, String start, String end) {
-        System.out.println("START : " + start);
-        System.out.println("END : " + end);
-        System.out.println(trainLine);
         int startIndex = trainLine.indexOf(start);
         int endIndex = trainLine.indexOf(end);
 
@@ -220,80 +198,44 @@ public class Main {
 
         // generate Train Line 1
         char train1 = trains[rand.nextInt(trains.length)];
-
         System.out.println("TRAIN 1: " + train1);
 
         // generate Transfer 1
         String transferStation1 = findTransferStation(train1, "");
-
-        System.out.println("TRANSFER STATION 1: " + transferStation1);
+        System.out.println("TRANFER 1: " + transferStation1);
 
         // generate start point
         String start = generatePoint(train1, transferStation1);
-
         System.out.println("START: " + start);
+
         List<String> train1Line = linesByStation.get(train1);
 
-        System.out.println(train1Line.indexOf(transferStation1));
-
-        // System.out.println("START: " + start + " -> " + train1Line);
-
         // create currentRoute
-        // TODO : NEED TO FIX DUPLICATE NAMES, fix transferStation addedd twice?
         addToRoute(train1Line, start, transferStation1);
 
         // generate Train Line 2
         List<Character> possibleTrains2 = transfersByStation.get(transferStation1);
-
         char train2 = generateTrain(possibleTrains2, new char[]{train1});
-
         System.out.println("TRAIN 2: " + train2);
 
-        // generate Transfer 2
-        // List<String> possibleTransfers2 = transfersByLine.get(train2);
-        // int num = rand.nextInt(possibleTransfers2.size());
-        // while(stationsPassed.contains(possibleTransfers2.get(num)) || transferStation1.equals(possibleTransfers2.get(num))) {
-        //     num = rand.nextInt(possibleTransfers2.size());
-        // }
-
-        // String transferStation2 = possibleTransfers2.get(num);
-        // System.out.println("Station 2: " + transferStation2);
-
+        // generate Tranfer 2
         String transferStation2 = findTransferStation(train2, transferStation1);
-        // if(transferStation2.contains("&")) {
-        //     transferStation2 = transferStation2.substring(0,transferStation2.indexOf('&')-1);
-        // }
+        System.out.println("TRANSFER 2: " + transferStation2);
 
         List<String> train2Line = linesByStation.get(train2);
 
         // create currentRouteß
         addToRoute(train2Line, transferStation1, transferStation2);
-        // int startIndex = train2Line.indexOf(transferStation1); // TODO : NEED TO FIX DUPLICATE NAMES
-        // int transferIndex = train2Line.indexOf(transferStation2);
-
-        // if(startIndex < transferIndex) {
-        //     for(int i = startIndex; i <= transferIndex; i++) {
-        //         stationsPassed.add(train2Line.get(i));
-        //     }
-        // } else {
-        //     for(int i = startIndex; i >= transferIndex; i--) {
-        //         stationsPassed.add(train2Line.get(i));
-        //     }            
-        // }
 
         // generate Train Line 3
         List<Character> possibleTrains3 = transfersByStation.get(transferStation2);
-        // int num = rand.nextInt(possibleTrains3.size());
-        // while(train1 == (char)possibleTrains3.get(num) || train2 == (char)possibleTrains3.get(num)) {
-        //     num = rand.nextInt(possibleTrains3.size());
-        // }
-
-        // char train3 = possibleTrains3.get(num);
 
         char train3 = generateTrain(possibleTrains3, new char[]{train1, train2});
+        System.out.println("TRAIN 3: " + train3);
 
         // generate end point
         String end = generatePoint(train3, transferStation2);
+        System.out.println("END: " + end);
 
         return start + "->" + Character.toString(train1) + "->" + transferStation1 + "->" + 
                 Character.toString(train2) + "->" + transferStation2 + "->" +

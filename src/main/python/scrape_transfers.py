@@ -31,7 +31,7 @@ def write_file(url):
         title : title of file
         url : url for webscraping
     '''
-    f = open("./Transfers/transfers.txt", "w")
+    f = open("src/Transfers/transfers.txt", "w")
     stations = get_transfers(url)
     for station in stations:
         print(station, file=f)
