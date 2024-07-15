@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +23,37 @@ public class Main {
         System.out.println(path);
     }
 
+    public static char generateTrain(List<Character> possibleTrains, List<Character> currentTrains) {
+        Random rand = new Random();
+
+        List<Character> currentPossibilities = new ArrayList<>();
+        for(Character train : possibleTrains) {
+            if(!currentTrains.contains(train)) {
+                currentPossibilities.add(train);
+            }
+        }
+
+        if(currentPossibilities.isEmpty()) {
+            return '0'; // no train can be generated
+        }
+
+        int num = rand.nextInt(currentPossibilities.size());
+        return currentPossibilities.get(num);
+    }
+
+    public static String generatePoint(char train, String transferStation) {
+        List<String> stations = map.getStations(train);
+
+        Random rand = new Random();
+        
+        int num = rand.nextInt(stations.size());
+        while(transferStation.equals(stations.get(num))) {
+            num = rand.nextInt(stations.size());
+        }
+
+        return stations.get(num);
+    }
+
     public static String findTransferStation(char train, String previousTransfer) {
         Random rand = new Random();
 
@@ -36,30 +68,6 @@ public class Main {
         }
 
         return transferStation;
-    }
-
-    public static char generateTrain(List<Character> possibleTrains, char[] currentTrains) {
-        Random rand = new Random(); // TODO: Is this actually randomizing?
-
-        int num = rand.nextInt(possibleTrains.size());
-        while(Arrays.binarySearch(currentTrains, (char)possibleTrains.get(num)) > -1) {
-            num = rand.nextInt(possibleTrains.size());
-        }
-
-        return (char)possibleTrains.get(num);
-    }
-
-    public static String generatePoint(char train, String transferStation) {
-        List<String> stations = map.getStations(train);
-
-        Random rand = new Random();
-        
-        int num = rand.nextInt(stations.size());
-        while(transferStation.equals(stations.get(num))) {
-            num = rand.nextInt(stations.size());
-        }
-
-        return stations.get(num);
     }
 
     public static void addToRoute(List<String> trainLine, String start, String end) {
@@ -80,8 +88,11 @@ public class Main {
     public static String generatePath() {
         Random rand = new Random();
 
+        List<Character> currentTrains = new ArrayList<>();
+
         // generate Train Line 1
         char train1 = trains[rand.nextInt(trains.length)];
+        currentTrains.add(train1);
         System.out.println("TRAIN 1: " + train1);
 
         // generate Transfer 1
@@ -99,7 +110,8 @@ public class Main {
 
         // generate Train Line 2
         List<Character> possibleTrains2 = map.getTrains(transferStation1);
-        char train2 = generateTrain(possibleTrains2, new char[]{train1});
+        char train2 = generateTrain(possibleTrains2, currentTrains);
+        currentTrains.add(train2);
         System.out.println("TRAIN 2: " + train2);
 
         // generate Tranfer 2
@@ -114,7 +126,8 @@ public class Main {
         // generate Train Line 3
         List<Character> possibleTrains3 = map.getTrains(transferStation2);
 
-        char train3 = generateTrain(possibleTrains3, new char[]{train1, train2});
+        char train3 = generateTrain(possibleTrains3, currentTrains);
+        currentTrains.add(train3);
         System.out.println("TRAIN 3: " + train3);
 
         // generate end point

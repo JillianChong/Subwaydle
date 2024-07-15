@@ -7,7 +7,13 @@ import src.main.java.SubwayMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class MainTest {
 
@@ -75,11 +81,74 @@ public class MainTest {
 
         // verifying the transfer station names match
         for(char train : trains) {
-            // System.out.println("TRAIN: " + train);
             for(String station : map.getTransfers(train)) {
-                // System.out.println(station);
-                assertTrue(map.getStations(train).contains(station));
+                assertTrue(station + " does not exist for train " + train, map.getStations(train).contains(station));
             }
         }
+    }
+
+    @Test
+    public void generateTrainTest() {
+        List<Character> possibleTrains0 = new ArrayList<>();
+
+        List<Character> currentTrains0 = new ArrayList<>();
+        currentTrains0.add('J');
+        assertEquals("Empty list test", '0', Main.generateTrain(possibleTrains0, currentTrains0));
+
+        List<Character> possibleTrains1 = new ArrayList<>();
+        Collections.addAll(possibleTrains1, 'A', 'B', 'C', '1', '2', '3', '7');
+        
+        List<Character> currentTrains1 = new ArrayList<>();
+        currentTrains1.add('C');
+
+        for(int i = 0; i < possibleTrains1.size()*2; i++) {
+            char generatedTrain = Main.generateTrain(possibleTrains1, currentTrains1);
+            // System.out.println("TRAIN: " + generatedTrain);
+            assertFalse(generatedTrain == 'C');
+        }
+
+        Collections.addAll(currentTrains1, '1', 'B', '7');
+        for(int i = 0; i < possibleTrains1.size()*2; i++) {
+            char generatedTrain = Main.generateTrain(possibleTrains1, currentTrains1);
+            // System.out.println("TRAIN " + i + ": " + generatedTrain);
+            assertNotEquals("0 should not be generated", '0', generatedTrain);
+            assertNotEquals("C should not be generated", 'C', generatedTrain);
+            assertNotEquals("1 should not be generated", '1', generatedTrain);
+            assertNotEquals("B should not be generated", 'B', generatedTrain);
+            assertNotEquals("7 should not be generated", '7', generatedTrain);
+        }
+
+        List<Character> possibleTrains2 = new ArrayList<>();
+        Collections.addAll(possibleTrains2, 'E', '2', 'G', 'L', '4', 'A');
+
+        List<Character> currentTrains2 = new ArrayList<>();
+        Collections.addAll(currentTrains2, '4', 'G', '2', 'L', 'A', 'E');
+
+        assertEquals("Same list test", '0', Main.generateTrain(possibleTrains2, currentTrains2));
+
+        char removedChar1 = currentTrains2.get(0);
+        currentTrains2.remove(0);
+        for(int i = 0; i < possibleTrains2.size()*2; i++) {
+            char generatedTrain = Main.generateTrain(possibleTrains2, currentTrains2);
+            assertEquals("Only one option test 1", removedChar1, generatedTrain);
+        }
+
+        char removedChar2 = currentTrains2.get(0);
+        currentTrains2.remove(0);
+        for(int i = 0; i < possibleTrains2.size()*2; i++) {
+            char generatedTrain = Main.generateTrain(possibleTrains2, currentTrains2);
+            assertTrue("Two option test", removedChar1 == generatedTrain || removedChar2 == generatedTrain);
+        }
+
+        List<Character> possibleTrains3 = new ArrayList<>();
+        possibleTrains3.add('4');
+
+        List<Character> currentTrains3 = new ArrayList<>();
+        Collections.addAll(currentTrains3, 'B', '3', 'L', 'M', '5');
+        assertEquals("One option test 2", '4', Main.generateTrain(possibleTrains3, currentTrains3));
+        assertEquals("One option test 3", '4', Main.generateTrain(possibleTrains3, currentTrains3));
+
+        currentTrains3.add('4');
+        assertEquals("No train left test", '0', Main.generateTrain(possibleTrains3, currentTrains3));
     }
 }
