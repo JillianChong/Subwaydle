@@ -2,8 +2,8 @@ package src.test;
 
 import org.junit.Test;
 
+import src.main.java.Main;
 import src.main.java.SubwayMap;
-import src.main.java.com.example.Main;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -41,8 +41,6 @@ public class MainTest {
         assertEquals(45, map.getStations('R').size());
         assertEquals(23, map.getStations('W').size());
         assertEquals(21, map.getStations('Z').size());
-
-        // verify certain station names at designated lines
     }
 
     @Test
@@ -77,12 +75,11 @@ public class MainTest {
 
         // verifying the transfer station names match
         for(char train : trains) {
-            System.out.println("TRAIN: " + train);
+            // System.out.println("TRAIN: " + train);
             for(String station : map.getTransfers(train)) {
-                System.out.println(station);
+                // System.out.println(station);
                 assertTrue(map.getStations(train).contains(station));
             }
         }
-
     }
 }

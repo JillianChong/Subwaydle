@@ -1,10 +1,7 @@
-package src.main.java.com.example;
+package src.main.java;
 
 import java.util.List;
 import java.util.Random;
-
-import src.main.java.SubwayMap;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,9 +13,11 @@ public class Main {
 
     public static List<String> stationsPassed = new ArrayList<>();
 
-    public static SubwayMap map = new SubwayMap();
+    public static SubwayMap map;
 
     public static void main(String[] args) {
+        map = new SubwayMap();
+
         String path = generatePath();
         System.out.println(path);
     }
