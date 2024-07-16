@@ -248,4 +248,19 @@ public class MainTest {
         assertTrue("Check start", map.getStations(train1).contains(path1[4]));
         assertTrue("Check end", map.getStations(train3).contains(path1[6]));
     }
+
+    @Test
+    public void checkSingleTrainTest() {
+        // TODO: Add tests
+    }
+    
+    @Test
+    public void checkAnswerTest() {
+        // TODO: Add tests
+    }
+
+    @Test
+    public void endGameTest() {
+        // TODO: Add tests
+    }
 }

@@ -13,9 +13,16 @@ public class Main {
     public static SubwayMap map = new SubwayMap();;
 
     public static void main(String[] args) {
+
+        // Generate & print path
         String[] pathInfo = generatePath();
         String path = printPath(pathInfo);
         System.out.println(path);
+
+        Checker check = new Checker(pathInfo[0], pathInfo[1], pathInfo[2]);
+        check.playGame();
+
+        System.out.println("YOU WIN! The route is: " + path);
     }
 
     public static char generateTrain(List<Character> possibleTrains, List<Character> currentTrains) {
