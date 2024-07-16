@@ -51,7 +51,8 @@ public class Checker {
         if(correctTrain == guess) {
             return 0;
         } else if(temp) { // determine same routing
-            return 1;
+            // TODO: IMPLEMENT SAME ROUTING
+            return 1; 
         } else if(otherTrains[0] == guess || otherTrains[1] == guess) {
             return 2;
         } else {
