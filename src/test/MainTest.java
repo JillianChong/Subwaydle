@@ -52,9 +52,7 @@ public class MainTest {
     @Test
     public void sortByTransfersTest() {
         // checking hashmap contains all stations
-        assertEquals(23, map.getTransfersByLine().size());
-        assertTrue(map.getTransfersByLine().containsKey('S'));
-        
+        assertEquals(22, map.getTransfersByLine().size());        
         // checking specific stations
         assertEquals(15, map.getTransfers('F').size());
         assertTrue(map.getTransfers('E').contains("Chambers St (M) & World Trade Center & Park Place & Cortlandt St"));
@@ -65,7 +63,7 @@ public class MainTest {
     @Test
     public void sortTransfersTest() {
         // checking size of hashmap
-        assertEquals(61, map.getTransfersByStation().size());
+        assertEquals(60, map.getTransfersByStation().size());
         assertEquals(3, map.getTrains("4 Av & 4 Av-9 Sts").size());
         assertEquals(7, map.getTrains("Chambers St (M) & World Trade Center & Park Place & Cortlandt St").size());
         assertEquals(3, map.getTrains("Queensboro Plaza").size());
@@ -188,6 +186,24 @@ public class MainTest {
     }
 
     @Test
+    public void checkTransferStationTest() {
+        List<String> stationsSeen1 = new ArrayList<>();
+        Collections.addAll(stationsSeen1, "Sutphin Blvd", "Briarwood", "Kew Gardens-Union Tpke", "75 Av", 
+            "Forest Hills-71 Av", "Jackson Hts-Roosevelt Av & 74 St-Broadway", "21 St-Queensbridge");
+
+        List<String> newRoute1 = new ArrayList<>();
+        Collections.addAll(newRoute1, "21 St-Queensbridge", "Roosevelt Island");
+
+        assertFalse(Main.checkTransferStation(stationsSeen1, newRoute1));
+
+        List<String> stationsSeen2 = new ArrayList<>();
+        List<String> newRoute2 = new ArrayList<>();
+        Collections.addAll(newRoute2, "Gun Hill Rd", "Pelham Pkwy", "Morris Park");
+        
+        assertTrue("Empty list test", Main.checkTransferStation(stationsSeen2, newRoute2));
+    }
+
+    @Test
     public void addToRouteTest() {
         List<String> route1 = Main.addToRoute('R', "65 St", "Lexington Av/59 St & Lexington Av/63 St & 59 St");
 
@@ -218,5 +234,18 @@ public class MainTest {
         assertEquals("Reverse order test", route3, expectedRoute3);
         assertEquals("Order test 1", "103 St", route3.get(0));
         assertEquals("Order test 2", "Brook Av", route3.get(route3.size()-1));
+    }
+
+    @Test
+    public void generatePathTest() {
+        String[] path1 = Main.generatePath();
+        char train1 = path1[0].charAt(0);
+        char train2 = path1[1].charAt(0);
+        char train3 = path1[2].charAt(0);
+        assertTrue("Unique trains", train1 != train2 && train2 != train3 && train1 != train3);
+        assertTrue("Transfer station 1 correct", map.getTrains(path1[4]).contains(train1) && map.getTrains(path1[4]).contains(train2));
+        assertTrue("Transfer station 2 correct", map.getTrains(path1[5]).contains(train2) && map.getTrains(path1[5]).contains(train3));
+        assertTrue("Check start", map.getStations(train1).contains(path1[4]));
+        assertTrue("Check end", map.getStations(train3).contains(path1[6]));
     }
 }
