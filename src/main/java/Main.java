@@ -19,6 +19,7 @@ public class Main {
         String path = printPath(pathInfo);
         System.out.println(path);
 
+        // TODO: Implement keyboard box coloring
         Checker check = new Checker(pathInfo[0], pathInfo[1], pathInfo[2]);
         check.playGame();
 
