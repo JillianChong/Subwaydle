@@ -1,14 +1,12 @@
-package src.test;
+package com.example.subwaydle;
 
-import org.junit.Test;
+// import org.junit.Test;
 
-import src.main.java.Main;
-import src.main.java.SubwayMap;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,7 +78,7 @@ public class MainTest {
         // verifying the transfer station names match
         for(char train : trains) {
             for(String station : map.getTransfers(train)) {
-                assertTrue(station + " does not exist for train " + train, map.getStations(train).contains(station));
+                assertTrue(map.getStations(train).contains(station), station + " does not exist for train " + train);
             }
         }
     }
@@ -91,7 +89,7 @@ public class MainTest {
 
         List<Character> currentTrains0 = new ArrayList<>();
         currentTrains0.add('J');
-        assertEquals("Empty list test", '0', Main.generateTrain(possibleTrains0, currentTrains0));
+        assertEquals('0', Main.generateTrain(possibleTrains0, currentTrains0), "Empty list test");
 
         List<Character> possibleTrains1 = new ArrayList<>();
         Collections.addAll(possibleTrains1, 'A', 'B', 'C', '1', '2', '3', '7');
@@ -109,11 +107,11 @@ public class MainTest {
         for(int i = 0; i < possibleTrains1.size()*2; i++) {
             char generatedTrain = Main.generateTrain(possibleTrains1, currentTrains1);
             // System.out.println("TRAIN " + i + ": " + generatedTrain);
-            assertNotEquals("0 should not be generated", '0', generatedTrain);
-            assertNotEquals("C should not be generated", 'C', generatedTrain);
-            assertNotEquals("1 should not be generated", '1', generatedTrain);
-            assertNotEquals("B should not be generated", 'B', generatedTrain);
-            assertNotEquals("7 should not be generated", '7', generatedTrain);
+            assertNotEquals(generatedTrain, "0 should not be generated");
+            assertNotEquals(generatedTrain, "C should not be generated");
+            assertNotEquals(generatedTrain, "1 should not be generated");
+            assertNotEquals(generatedTrain, "B should not be generated");
+            assertNotEquals(generatedTrain, "7 should not be generated");
         }
 
         List<Character> possibleTrains2 = new ArrayList<>();
@@ -122,20 +120,20 @@ public class MainTest {
         List<Character> currentTrains2 = new ArrayList<>();
         Collections.addAll(currentTrains2, '4', 'G', '2', 'L', 'A', 'E');
 
-        assertEquals("Same list test", '0', Main.generateTrain(possibleTrains2, currentTrains2));
+        assertEquals('0', Main.generateTrain(possibleTrains2, currentTrains2), "Same list test");
 
         char removedChar1 = currentTrains2.get(0);
         currentTrains2.remove(0);
         for(int i = 0; i < possibleTrains2.size()*2; i++) {
             char generatedTrain = Main.generateTrain(possibleTrains2, currentTrains2);
-            assertEquals("Only one option test 1", removedChar1, generatedTrain);
+            assertEquals(removedChar1, generatedTrain, "Only one option test 1");
         }
 
         char removedChar2 = currentTrains2.get(0);
         currentTrains2.remove(0);
         for(int i = 0; i < possibleTrains2.size()*2; i++) {
             char generatedTrain = Main.generateTrain(possibleTrains2, currentTrains2);
-            assertTrue("Two option test", removedChar1 == generatedTrain || removedChar2 == generatedTrain);
+            assertTrue(removedChar1 == generatedTrain || removedChar2 == generatedTrain, "Two option test");
         }
 
         List<Character> possibleTrains3 = new ArrayList<>();
@@ -143,24 +141,24 @@ public class MainTest {
 
         List<Character> currentTrains3 = new ArrayList<>();
         Collections.addAll(currentTrains3, 'B', '3', 'L', 'M', '5');
-        assertEquals("One option test 2", '4', Main.generateTrain(possibleTrains3, currentTrains3));
-        assertEquals("One option test 3", '4', Main.generateTrain(possibleTrains3, currentTrains3));
+        assertEquals('4', Main.generateTrain(possibleTrains3, currentTrains3), "One option test 2");
+        assertEquals('4', Main.generateTrain(possibleTrains3, currentTrains3), "One option test 3");
 
         currentTrains3.add('4');
-        assertEquals("No train left test", '0', Main.generateTrain(possibleTrains3, currentTrains3));
+        assertEquals('0', Main.generateTrain(possibleTrains3, currentTrains3), "No train left test");
     }
 
     @Test
     public void generatePointTest() {
         String generatedPoint1 = Main.generatePoint('F', "Parsons Blvd");
-        assertTrue("Station not found test 1", map.getStations('F').contains(generatedPoint1));
-        assertFalse("Station not found test 2", map.getStations('1').contains(generatedPoint1));
-        assertNotEquals("Inequal stations test 1", generatedPoint1, "Parsons Blvd");
+        assertTrue(map.getStations('F').contains(generatedPoint1), "Station not found test 1");
+        assertFalse(map.getStations('1').contains(generatedPoint1), "Station not found test 2");
+        assertNotEquals(generatedPoint1, "Parsons Blvd", "Inequal stations test 1");
 
         String generatedPoint2 = Main.generatePoint('7', "61 St-Woodside");
-        assertTrue("Station not found test 2", map.getStations('7').contains(generatedPoint2));
-        assertFalse("Station not found test 4", map.getStations('J').contains(generatedPoint2));
-        assertNotEquals("Inequal stations test 2", generatedPoint2, "61 St-Woodside");
+        assertTrue(map.getStations('7').contains(generatedPoint2), "Station not found test 2");
+        assertFalse(map.getStations('J').contains(generatedPoint2), "Station not found test 4");
+        assertNotEquals(generatedPoint2, "61 St-Woodside", "Inequal stations test 2");
     }
 
     @Test
@@ -178,11 +176,11 @@ public class MainTest {
         Collections.addAll(stationsSeen2, "Broadway Junction", "Brooklyn Bridge-City Hall & Chambers St (E)", 
             "Canal St (E)", "Delancey St-Essex St", "Fulton St", "Myrtle Av");
         String transferStation2 = Main.findTransferStation('J', "Fulton St", stationsSeen2);
-        assertEquals("Only one station left", "Sutphin Blvd-Archer Av-JFK Airport", transferStation2);
+        assertEquals("Sutphin Blvd-Archer Av-JFK Airport", transferStation2, "Only one station left");
         
         stationsSeen2.add("Sutphin Blvd-Archer Av-JFK Airport");
         transferStation2 = Main.findTransferStation('J', "Fulton St", stationsSeen2);
-        assertEquals("No transfer stations found", "0", transferStation2);
+        assertEquals("0", transferStation2, "No transfer stations found");
     }
 
     @Test
@@ -200,7 +198,7 @@ public class MainTest {
         List<String> newRoute2 = new ArrayList<>();
         Collections.addAll(newRoute2, "Gun Hill Rd", "Pelham Pkwy", "Morris Park");
         
-        assertTrue("Empty list test", Main.checkTransferStation(stationsSeen2, newRoute2));
+        assertTrue(Main.checkTransferStation(stationsSeen2, newRoute2), "Empty list test");
     }
 
     @Test
@@ -214,10 +212,10 @@ public class MainTest {
 
         String removed = expectedRoute1.get(0);
         expectedRoute1.remove(0);
-        assertNotEquals("One station missing test", route1, expectedRoute1);
+        assertNotEquals(route1, expectedRoute1, "One station missing test");
 
         expectedRoute1.add(removed);
-        assertNotEquals("Stations out of order", route1, expectedRoute1);
+        assertNotEquals(route1, expectedRoute1, "Stations out of order");
 
         List<String> route2 = Main.addToRoute('G', "Bedford-Nostrand Avs", "Bedford-Nostrand Avs");
 
@@ -230,10 +228,10 @@ public class MainTest {
         List<String> expectedRoute3 = new ArrayList<>();
         Collections.addAll(expectedRoute3, "103 St", "110 St", "116 St", "125 St", "3 Av-138 St", "Brook Av");
 
-        assertEquals("Size test", 6, route3.size());
-        assertEquals("Reverse order test", route3, expectedRoute3);
-        assertEquals("Order test 1", "103 St", route3.get(0));
-        assertEquals("Order test 2", "Brook Av", route3.get(route3.size()-1));
+        assertEquals(6, route3.size(), "Size test");
+        assertEquals(route3, expectedRoute3, "Reverse order test");
+        assertEquals("103 St", route3.get(0), "Order test 1");
+        assertEquals("Brook Av", route3.get(route3.size()-1), "Order test 2");
     }
 
     @Test
@@ -242,11 +240,11 @@ public class MainTest {
         char train1 = path1[0].charAt(0);
         char train2 = path1[1].charAt(0);
         char train3 = path1[2].charAt(0);
-        assertTrue("Unique trains", train1 != train2 && train2 != train3 && train1 != train3);
-        assertTrue("Transfer station 1 correct", map.getTrains(path1[4]).contains(train1) && map.getTrains(path1[4]).contains(train2));
-        assertTrue("Transfer station 2 correct", map.getTrains(path1[5]).contains(train2) && map.getTrains(path1[5]).contains(train3));
-        assertTrue("Check start", map.getStations(train1).contains(path1[4]));
-        assertTrue("Check end", map.getStations(train3).contains(path1[6]));
+        assertTrue(train1 != train2 && train2 != train3 && train1 != train3, "Unique trains");
+        assertTrue(map.getTrains(path1[4]).contains(train1) && map.getTrains(path1[4]).contains(train2), "Transfer station 1 correct");
+        assertTrue(map.getTrains(path1[5]).contains(train2) && map.getTrains(path1[5]).contains(train3), "Transfer station 2 correct");
+        assertTrue(map.getStations(train1).contains(path1[4]), "Check start");
+        assertTrue(map.getStations(train3).contains(path1[6]), "Check end");
     }
 
     @Test

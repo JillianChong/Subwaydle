@@ -43,7 +43,7 @@ h2 {
     line-height: 110px; /* Vertically center text */
     text-align: left; /* Center text horizontally */
     position: relative; /* Positioned relative to its normal position */
-    left: -9px;
+    left: -7px;
     transform: rotateX(0deg) rotateY(0deg);
 }
 

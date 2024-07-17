@@ -1,4 +1,4 @@
-package src.main.java;
+package com.example.subwaydle;
 
 import java.util.Scanner;
 
