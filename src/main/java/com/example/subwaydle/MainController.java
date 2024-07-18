@@ -1,22 +1,57 @@
 package com.example.subwaydle;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 public class MainController {
+    
+    String greenHex = "#27BB5F";
+    String blueHex = "#27A3BB";
+    String yellowHex = "#F0DF4F";
+    String grayHex = "#C7C7C4";
+
+    int[] guessResults;
+
+    @GetMapping("/generatePath")
+    public String[] generatePath() {
+        String[] pathInfo = SubwaydleApplication.generatePathToController();
+
+        return pathInfo;
+    }
 
     @PostMapping("/submitData")
     public String receiveData(@RequestBody String[] received_data) {
-        // Handle the data received
-        if (received_data != null) {
-            System.out.println("Received data: " + String.join(", ", received_data));
-        } else {
-            System.out.println("Received data is null or empty");
+        // DO SOMETHING; -- pass data to subwaydle application to get back results of each box
+        char[] guess = new char[3];
+        for(int i = 0; i < guess.length; i++) {
+            guess[i] = received_data[i].charAt(0);
         }
-        
-        // DO SOMETHING;
+
+        guessResults = SubwaydleApplication.sendAnswerToController(guess);
 
         return "Data received successfully";
+    }
+
+    // Updates colors of row
+    @GetMapping("/updateBoard")
+    public String[] updateBoard(Model model) {
+        String[] colors = new String[3];
+        for(int i = 0; i < guessResults.length; i++) {
+            int result = guessResults[i];
+
+            if(result == 0) {
+                colors[i] = greenHex;
+            } else if(result == 1) {
+                colors[i] = blueHex;
+            } else if(result == 2) {
+                colors[i] = yellowHex;
+            } else {
+                colors[i] = grayHex;
+            }
+        }
+
+        return colors;
     }
 }

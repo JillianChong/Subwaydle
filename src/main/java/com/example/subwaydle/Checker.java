@@ -60,7 +60,7 @@ public class Checker {
         }
     }
 
-    private int[] checkAnswer(char[] guesses) {
+    public int[] checkAnswer(char[] guesses) {
         int[] answers = new int[3];
         for(int i = 0; i < guesses.length; i++) {
             int output = checkSingleTrain(i, guesses[i]);
