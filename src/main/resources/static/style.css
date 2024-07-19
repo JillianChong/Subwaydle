@@ -150,6 +150,26 @@ button:hover {
     transform: translate(-50%, -50%);
 }
 
+.greenHex {
+    /* background-color: #C7C7C4; */
+    background-color: #27BB5F;
+}
+
+.blueHex {
+    /* background-color: #C7C7C4; */
+    background-color: #27A3BB;
+}
+
+.yellowHex {
+    /* background-color: #C7C7C4; */
+    background-color: #F0DF4F;
+}
+
+.grayHex {
+    /* background-color: #C7C7C4; */
+    background-color: #C7C7C4;
+}
+
 #train1, #train2, #train3 {
     background-color: #EE352E;
 }
@@ -162,28 +182,28 @@ button:hover {
     background-color: #B933AD;
 }
 
-#A, #C, #E {
+#trainA, #trainC, #trainE {
     background-color: #0039A6;
 }
 
-#B, #D, #F, #M {
+#trainB, #trainD, #trainF, #trainM {
     background-color: #FF6319;
 }
 
-#G {
+#trainG {
     background-color: #6CBE45;
 }
 
-#L {
+#trainL {
     background-color: #A7A9AC;
 }
 
-#N, #Q, #R, #W {
+#trainN, #trainQ, #trainR, #trainW {
     background-color: #FCCC0A;
     color: black;
 }
 
-#J, #Z {
+#trainJ, #trainZ {
     background-color: #996633;
 }
  
