@@ -8,9 +8,11 @@ import java.util.Map;
 
 public class Main {
 
-    public static char[] trains = new char[]{'1', '2', '3', '4', '5', '6', '7', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'J', 'L', 'M', 'N', 'Q', 'R', 'W', 'Z'};
+    private static char[] trains = new char[]{'1', '2', '3', '4', '5', '6', '7', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'J', 'L', 'M', 'N', 'Q', 'R', 'W', 'Z'};
 
-    public static SubwayMap map = new SubwayMap();;
+    private static SubwayMap map = new SubwayMap();
+
+    public static List<List<Character>> similarRoutes = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -21,7 +23,6 @@ public class Main {
         // String path = printPath(pathInfo);
         // System.out.println(path);
 
-        // // TODO: Implement keyboard box coloring
         // Checker check = new Checker(pathInfo[0], pathInfo[1], pathInfo[2]);
         // check.playGame();
 
@@ -127,6 +128,7 @@ public class Main {
         while(true) {
             List<Character> currentTrains = new ArrayList<>();
             List<String> stationsPassed = new ArrayList<>();
+            similarRoutes = new ArrayList<>();
 
             // generate Train Line 1
             char train1 = trains[rand.nextInt(trains.length)];
@@ -191,9 +193,97 @@ public class Main {
 
             String[] output = new String[]{Character.toString(train1), Character.toString(train2), Character.toString(train3), start, transferStation1, transferStation2, end};
 
+            similarRoutes.add(findSimilarRoutes(train1, start, transferStation1));
+            similarRoutes.add(findSimilarRoutes(train2, transferStation1, transferStation2));
+            similarRoutes.add(findSimilarRoutes(train3, transferStation2, end));
+
+            System.out.println("Similar Routes 1: " + similarRoutes.get(0));
+            System.out.println("Similar Routes 2: " + similarRoutes.get(1));
+            System.out.println("Similar Routes 3: " + similarRoutes.get(2));
+
             return output;
         }
-        
+    }
+
+    public static List<Character> findSimilarRoutes(char train, String start, String end) {
+
+        //First, check both trains have same start and end
+        List<Character> linesAtStart = map.getTrains(start);
+        List<Character> linesAtEnd = map.getTrains(end);
+        List<Character> similar = new ArrayList<>();
+
+        if(linesAtStart == null && linesAtEnd == null) {
+            return new ArrayList<>();
+        }
+
+        if(linesAtStart != null) {
+            for(Character c : linesAtStart) {
+                if(c == train) {
+                    continue;
+                }
+    
+                if(!similar.contains(c)) {
+                    similar.add(c);
+                }
+            }
+        }
+
+        if(linesAtEnd != null) {
+            for(Character c : linesAtEnd) {
+                if(c == train) {
+                    continue;
+                }
+    
+                if(!similar.contains(c)) {
+                    similar.add(c);
+                }
+            }
+        }
+
+        // Second, check the path matches exactly
+        List<String> trainRoute = map.getStations(train);
+        int startIndex = trainRoute.indexOf(start);
+        int endIndex = trainRoute.indexOf(end);
+
+        if(endIndex > startIndex) {
+            trainRoute = trainRoute.subList(startIndex, endIndex);
+        } else {
+            trainRoute = trainRoute.subList(endIndex, startIndex);
+        }
+
+        List<Character> finalSimilar = new ArrayList<>();
+        for(Character similarTrain : similar) {
+            List<String> similarRoute = map.getStations(similarTrain);
+
+            startIndex = similarRoute.indexOf(start);
+            endIndex = similarRoute.indexOf(end);
+
+            if(startIndex == -1 || endIndex == -1) {
+                continue;
+            }
+
+            if(endIndex > startIndex) {
+                similarRoute = similarRoute.subList(startIndex, endIndex);
+            } else {
+                similarRoute = similarRoute.subList(endIndex, startIndex);
+            }
+
+            List<String> smaller = trainRoute.size() < similarRoute.size() ? trainRoute : similarRoute;
+            List<String> larger = trainRoute.size() < similarRoute.size() ? similarRoute : trainRoute;
+            boolean add = true;
+            for(int i = 0; i < smaller.size(); i++) {
+                if(!larger.contains(smaller.get(i))) {
+                    add = false;
+                    break;
+                }
+            }
+
+            if(add) {
+                finalSimilar.add(similarTrain);
+            }
+        }
+
+        return finalSimilar;
     }
 
     public static String printPath(String[] pathInfo) {

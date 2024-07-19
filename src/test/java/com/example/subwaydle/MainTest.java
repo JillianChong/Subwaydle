@@ -248,6 +248,42 @@ public class MainTest {
     }
 
     @Test
+    public void findSimilarRoutesTest() {
+        List<Character> similar1 = Main.findSimilarRoutes('1', "96 St", "Chambers St (W)");
+        List<Character> actual1 = new ArrayList<>();
+        Collections.addAll(actual1, '2', '3');
+        assertEquals(actual1, similar1, "Generic test");
+
+        List<Character> similar2 = Main.findSimilarRoutes('1', "96 St", "28 St");
+        List<Character> actual2 = new ArrayList<>();
+        assertEquals(actual2, similar2, "End station not shared");
+
+        List<Character> similar3 = Main.findSimilarRoutes('3', "Nevins St", "Crown Heights-Utica Av");
+        List<Character> actual3 = new ArrayList<>();
+        actual3.add('4');
+        assertEquals(actual3, similar3);
+
+        List<Character> similar6 = Main.findSimilarRoutes('3', "Crown Heights-Utica Av", "Nevins St");
+        List<Character> actual6 = new ArrayList<>();
+        actual6.add('4');
+        assertEquals(actual6, similar6, "Flipped start and end");
+
+        List<Character> similar4 = Main.findSimilarRoutes('B', "Grand St", "Church Av");
+        List<Character> actual4 = new ArrayList<>();
+        assertEquals(actual4, similar4);
+
+        List<Character> similar5 = Main.findSimilarRoutes('6', "14 St-Union Sq", "125 St");
+        List<Character> actual5 = new ArrayList<>();
+        Collections.addAll(actual5, '4', '5');
+        assertEquals(actual5, similar5);
+
+        List<Character> similar7 = Main.findSimilarRoutes('A', "Broadway Junction", "Times Sq-42 St & 42 St/Port Authority Bus Terminal");
+        List<Character> actual7 = new ArrayList<>();
+        actual7.add('C');
+        assertEquals(actual7, similar7);
+    }
+
+    @Test
     public void checkSingleTrainTest() {
         // TODO: Add tests
     }

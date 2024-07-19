@@ -17,7 +17,6 @@ public class SubwaydleApplication {
 		String path = Main.printPath(pathInfo);
 		System.out.println(path);
 
-		// TODO: Implement keyboard box coloring
 		check = new Checker(pathInfo[0], pathInfo[1], pathInfo[2]);
 
 		return pathInfo;

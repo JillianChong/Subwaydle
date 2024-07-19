@@ -1,5 +1,6 @@
 package com.example.subwaydle;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Checker {
@@ -10,6 +11,7 @@ public class Checker {
 
     public Checker(String t1, String t2, String t3) {
         trains = new char[]{t1.charAt(0), t2.charAt(0), t3.charAt(0)};
+
         attempts = 1;
     }
 
@@ -25,6 +27,12 @@ public class Checker {
         char guess3 = scan.next().toUpperCase().charAt(0);
 
         return new char[]{guess1, guess2, guess3};
+    }
+
+    private boolean checkSameRoute(int correctTrainIndex, char guess) { 
+        List<Character> similarTrains = Main.similarRoutes.get(correctTrainIndex);
+
+        return similarTrains.contains(guess); //???
     }
 
     private int checkSingleTrain(int correctTrainIndex, char guess) {
@@ -46,12 +54,9 @@ public class Checker {
             }
         }
 
-        boolean temp = false; // FIX WHEN DETERMINED SAME ROUTING
-
         if(correctTrain == guess) {
             return 0;
-        } else if(temp) { // determine same routing
-            // TODO: IMPLEMENT SAME ROUTING
+        } else if(checkSameRoute(correctTrainIndex, guess)) {
             return 1; 
         } else if(otherTrains[0] == guess || otherTrains[1] == guess) {
             return 2;

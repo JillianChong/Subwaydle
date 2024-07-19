@@ -101,7 +101,6 @@ public class SubwayMap {
         }
     }
 
-    // TODO : COMBINE THIS WITH SORTBYTRANSFERS()
     private void sortTransfers() {
         try {
             File file = new File("src/Transfers/transfers_copy.txt");
