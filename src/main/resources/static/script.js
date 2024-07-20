@@ -7,16 +7,34 @@ var blueHex = "#27A3BB";
 var yellowHex = "#F0DF4F";
 var grayHex = "#C7C7C4";
 
-window.addEventListener('DOMContentLoaded', function() {
-    fetch('/api/generatePath')
-        .then(response => response.json())
-        .then(path => {
-            console.log("Received path:", path);
+window.addEventListener('DOMContentLoaded', async function() {
+    try {
+        var codeStart;
+        var codeEnd;
+        const response = await fetch('/api/generatePath');
+        const path = await response.json();
+    
+        console.log("Received path:", path);
 
-            document.getElementById('instructions-text').innerText = 
-                'Transfer from ' + path[3] + ' to '+ path[6] + ' using 2 transfers.';
-        })
-        .catch(error => console.error('Error:', error));
+        var codeStart = path[3];
+        var trainStart = path[0];
+        var codeEnd = path[6];
+        var trainEnd = path[2];
+
+        if(codeStart.includes("&") || codeStart.includes("(")) {
+            codeStart = await fetchCodeName(codeStart, trainStart);
+        }
+
+        if(codeEnd.includes("&") || codeEnd.includes("(")) {
+            codeEnd = await fetchCodeName(codeEnd, trainEnd);
+        }
+
+        document.getElementById('instructions-text').innerText = 
+            'Transfer from ' + codeStart + ' to '+ codeEnd + ' using 2 transfers.';
+
+        } catch (error) {
+            console.error('Error:', error)
+        }
 });
 
 window.addEventListener("keydown", takeKeyInput);
@@ -196,5 +214,25 @@ function takeKeyInput(event) {
         updateRowGUI(event);
     } else if(event.keyCode == 8) { // BACKSPACE
         deleteBoxGUI();
+    }
+}
+
+async function fetchCodeName(codeName, train) {
+    const input = [codeName, train];
+
+    try {
+        const response = await fetch('/api/getDisplayName', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(input)
+        });
+        const displayName = await response.text();
+
+        console.log(displayName);
+        return displayName;
+    } catch(error) {
+        console.error('Error:', error);
     }
 }

@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
+
 public class SubwayMap {
     // String : train, List<String> : stations
     // Stores a list of stations for each line
@@ -132,6 +135,35 @@ public class SubwayMap {
         }
     }
 
+    private String findDisplayName(String codeName, char train) { // only call if name has "(" or "&"
+        String csvFile = "src/misc/files/station_names.csv";
+        try {
+            CSVReader reader = new CSVReader(new FileReader(csvFile));
+
+            String[] line = reader.readNext();
+
+            System.out.println("CODE NAME: " + codeName);
+
+            line = reader.readNext();
+            while(line != null) {
+                System.out.println(line[0]);
+                if(line[0].strip().equals(codeName) && line[1].strip().charAt(0) == train) {
+                    return line[2].strip();
+                }
+
+                line = reader.readNext();
+            }
+
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("IO Exception");
+        } catch (CsvValidationException e) {
+            System.out.println("CSV Validation Exception");
+        }
+
+        return "None"; // TODO: make a statement for this!
+    }
+
     public HashMap<Character, List<String>> getLinesByStation() {
         return linesByStation;
     }
@@ -154,5 +186,9 @@ public class SubwayMap {
 
     public List<Character> getTrains(String station) {
         return transfersByStation.get(station);
+    }
+
+    public String getDisplayName(String codeName, char train) {
+        return findDisplayName(codeName, train);
     }
 }

@@ -286,6 +286,16 @@ public class Main {
         return finalSimilar;
     }
 
+    public static String getDisplayName(String codeName, char train) {
+        String name = map.getDisplayName(codeName, train);
+        if(name.equals("None")) {
+            // System.out.println("NO NAME FOUND!!");
+            return "NONE";
+        } else {
+            return name;
+        }
+    }
+
     public static String printPath(String[] pathInfo) {
         return "START: " + pathInfo[3] + " -> " + pathInfo[0] + " -> " + pathInfo[4] + " -> " + 
         pathInfo[1] + " -> " + pathInfo[5] + " -> " +

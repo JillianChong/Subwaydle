@@ -20,7 +20,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 
-df = pd.read_csv("src/main/python/nyc-transit-subway-entrance-and-exit-data.csv", delimiter=',')
+df = pd.read_csv("src/misc/files/nyc-transit-subway-entrance-and-exit-data.csv", delimiter=',')
 
 df.dropna(
     axis=0,

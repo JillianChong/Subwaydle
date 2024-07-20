@@ -26,4 +26,8 @@ public class SubwaydleApplication {
 		return check.checkAnswer(guess);
 	}
 
+	public static String sendDisplayNameToController(String codeName, char train) {
+		return Main.getDisplayName(codeName, train);
+	}
+
 }

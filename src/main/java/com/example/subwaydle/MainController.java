@@ -1,12 +1,14 @@
 package com.example.subwaydle;
 
+import java.util.List;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 public class MainController {
-    
+
     String greenHex = "#27BB5F";
     String blueHex = "#27A3BB";
     String yellowHex = "#F0DF4F";
@@ -53,5 +55,13 @@ public class MainController {
         }
 
         return colors;
+    }
+
+    @PostMapping("/getDisplayName")
+    public String getDisplayName(@RequestBody List<String> input) {
+        String codeName = input.get(0);
+        char train = input.get(1).charAt(0);
+        
+        return SubwaydleApplication.sendDisplayNameToController(codeName, train);
     }
 }
