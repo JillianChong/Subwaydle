@@ -40,7 +40,7 @@ public class SubwayMap {
         BufferedReader br;
         try {
             for(char train : trains) {
-                String filePath = "src/Stations/" + Character.toString(train) + "_train.txt";
+                String filePath = "src/misc/stations/" + Character.toString(train) + "_train.txt";
                 file = new File(filePath);
 
                 br = new BufferedReader(new FileReader(file));
@@ -65,7 +65,7 @@ public class SubwayMap {
     }
 
     private void sortByTransfers() {
-        File file = new File("src/Transfers/transfers_copy.txt");
+        File file = new File("src/misc/transfers/transfers_copy.txt");
         BufferedReader br;
 
         try {
@@ -103,7 +103,7 @@ public class SubwayMap {
 
     private void sortTransfers() {
         try {
-            File file = new File("src/Transfers/transfers_copy.txt");
+            File file = new File("src/misc/transfers/transfers_copy.txt");
             BufferedReader br = new BufferedReader(new FileReader(file));  
 
             String line = br.readLine();
