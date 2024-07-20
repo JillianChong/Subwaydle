@@ -39,6 +39,22 @@ window.addEventListener('DOMContentLoaded', async function() {
 
 window.addEventListener("keydown", takeKeyInput);
 
+document.addEventListener('DOMContentLoaded', function() {
+    const popup = document.getElementById('end-game');
+    const openPopupButton = document.getElementById('open-popup');
+
+    openPopupButton.addEventListener('click', function() {
+        popup.style.display = 'flex';
+    });
+
+    // Close the popup when clicking outside of the popup content
+    window.addEventListener('click', function(event) {
+        if (event.target === popup) {
+            popup.style.display = 'none';
+        }
+    });
+});
+
 function inputGuess() {
     alert('Button clicked!');
 }

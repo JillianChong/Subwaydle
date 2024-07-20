@@ -20,21 +20,21 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 
-df = pd.read_csv("src/misc/files/nyc-transit-subway-entrance-and-exit-data.csv", delimiter=',')
+df = pd.read_csv("src/misc/files/out.csv", delimiter=',')
 
 df.dropna(
     axis=0,
     how='any',
-    subset=['Station Latitude', 'Station Longitude'],
+    subset=['GTFS Latitude', 'GTFS Longitude'],
     inplace=True
 )
 
 # Plotting map -- change the colors of the right points?
 fig = px.scatter_mapbox(df, 
-                        lat="Station Latitude", 
-                        lon="Station Longitude", 
-                        hover_name="Station Name", 
-                        hover_data={"Station Latitude": True, "Station Longitude": True},
+                        lat="GTFS Latitude", 
+                        lon="GTFS Longitude", 
+                        hover_name="Stop Name", 
+                        hover_data={"GTFS Latitude": True, "GTFS Longitude": True},
                         color_discrete_sequence=["red"],
                         zoom=10, 
                         height=800,
@@ -47,8 +47,8 @@ point2 = df.iloc[10]
 
 line = go.Scattermapbox(
     mode = "lines",
-    lon = [point1["Station Longitude"], point2["Station Longitude"]],
-    lat = [point1["Station Latitude"], point2["Station Latitude"]],
+    lon = [point1["GTFS Longitude"], point2["GTFS Longitude"]],
+    lat = [point1["GTFS Latitude"], point2["GTFS Latitude"]],
     marker = {'size': 10},
     line = dict(width = 4, color = 'blue')
 )

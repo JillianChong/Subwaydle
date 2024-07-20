@@ -142,12 +142,10 @@ public class SubwayMap {
 
             String[] line = reader.readNext();
 
-            System.out.println("CODE NAME: " + codeName);
-
             line = reader.readNext();
             while(line != null) {
-                System.out.println(line[0]);
                 if(line[0].strip().equals(codeName) && line[1].strip().charAt(0) == train) {
+                    reader.close();
                     return line[2].strip();
                 }
 
