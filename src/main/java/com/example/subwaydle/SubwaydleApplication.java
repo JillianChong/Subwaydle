@@ -7,13 +7,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SubwaydleApplication {
 
 	private static Checker check;
+	public static String[] pathInfo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SubwaydleApplication.class, args);
 	}
 
 	public static String[] generatePathToController() {
-		String[] pathInfo = Main.generatePath();
+		pathInfo = Main.generatePath();
 		String path = Main.printPath(pathInfo);
 		System.out.println(path);
 
@@ -28,6 +29,12 @@ public class SubwaydleApplication {
 
 	public static String sendDisplayNameToController(String codeName, char train) {
 		return Main.getDisplayName(codeName, train);
+	}
+
+	public static String sendPathToController() {
+		return "START: " + pathInfo[3] + " -> " + pathInfo[0] + " -> " + pathInfo[4] + " -> " + 
+        pathInfo[1] + " -> " + pathInfo[5] + " -> " +
+        pathInfo[2] + " -> " + "END: " + pathInfo[6];
 	}
 
 }

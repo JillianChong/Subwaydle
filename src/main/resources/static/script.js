@@ -39,26 +39,6 @@ window.addEventListener('DOMContentLoaded', async function() {
 
 window.addEventListener("keydown", takeKeyInput);
 
-document.addEventListener('DOMContentLoaded', function() {
-    const popup = document.getElementById('end-game');
-    const openPopupButton = document.getElementById('open-popup');
-
-    openPopupButton.addEventListener('click', function() {
-        popup.style.display = 'flex';
-    });
-
-    // Close the popup when clicking outside of the popup content
-    window.addEventListener('click', function(event) {
-        if (event.target === popup) {
-            popup.style.display = 'none';
-        }
-    });
-});
-
-function inputGuess() {
-    alert('Button clicked!');
-}
-
 const letterButtons = document.querySelectorAll('.letter');
 letterButtons.forEach(function(button) {button.addEventListener('click', updateBoxGUI);});
 
@@ -67,6 +47,12 @@ enterButton.addEventListener('click', updateRowGUI);
 
 const deleteButton = document.querySelector("#delete");
 deleteButton.addEventListener('click', deleteBoxGUI);
+
+const closeButton = document.querySelector("#close-popup");
+closeButton.addEventListener('click', function () {
+    const popup = document.querySelector(".popup");
+    popup.style.display = 'none';
+})
 
 function updateRowGUI(event) { // when enter is clicked
     // Send the data to the Spring Boot controller using Fetch API
@@ -82,8 +68,8 @@ function updateRowGUI(event) { // when enter is clicked
         .then(responseText => {
             return updateRowGUIHelper();
         }).then(() => {
-            if(currentRow == 6) {
-                alert('END GAME!'); // TODO: Create popup
+            if(currentRow == 7) {
+                updateWindow("YOU LOSE!");
             } else {
                 // currentRow++;
                 currentBox = 1;
@@ -95,9 +81,9 @@ function updateRowGUI(event) { // when enter is clicked
 }
 
 async function updateRowGUIHelper() {
-    fetch('/api/updateBoard')
-        .then(response => response.json())
-        .then(colors => {
+    try {
+        const response = await fetch('/api/updateBoard');
+        const colors = await response.json();
             console.log("Received colors:", colors);
 
             if(Array.isArray(colors) && colors.length == 3) {
@@ -114,14 +100,19 @@ async function updateRowGUIHelper() {
                 updateKeyboardGUIHelper(colors);
 
                 console.log("Board updated successfully.");
+
+                if(colors[0] == greenHex && colors[1] == greenHex && colors[2] == greenHex) {
+                    await updateWindow("YAY! YOU WIN!"); // NEED TO MAKE TEHSE AWAIT
+                }
             } else {
                 console.error("Received colors array is invalid:", colors);
             }
 
             currentRow++;
             guess = [];
-        })
-        .catch(error => console.error('Error:', error));
+    } catch(error) {
+        console.error('Error:', error);
+    }
 }
 
 function updateKeyboardGUIHelper(colors) {
@@ -249,6 +240,25 @@ async function fetchCodeName(codeName, train) {
         console.log(displayName);
         return displayName;
     } catch(error) {
+        console.error('Error:', error);
+    }
+}
+
+async function updateWindow(outcome) {
+    const popup = document.getElementById('end-game');
+
+    const constText = document.getElementById("outcome");
+    constText.innerHTML = outcome;
+
+    const pathText = document.getElementById("path");
+
+    try{
+        const response = await fetch('/api/printPath');
+        const path = await response.text();
+
+        pathText.innerHTML = path;
+        popup.style.display = 'flex';
+    } catch(error) { 
         console.error('Error:', error);
     }
 }

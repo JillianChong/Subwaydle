@@ -18,15 +18,29 @@
 
     <div id="board">
         <div id="row1" class="row">
-            <div id="box1" class="box">
-                <div class="board-input"></div>
-            </div>
-            <div id="box2" class="box">
-                <div class="board-input"></div>
-            </div>
-            <div id="box3" class="box">                
-                <div class="board-input"></div>
-            </div>
+            <div class="train-design">
+                <div class="box-border">
+                    <div id="box1" class="box">
+                        <div class="board-input"></div>
+                    </div>
+                    <div id="box2" class="box">
+                        <div class="board-input"></div>
+                    </div>
+                    <div id="box3" class="box">                
+                        <div class="board-input"></div>
+                    </div>
+                </div>
+                <div class="all-wheels" >
+                    <div class="wheel-group1">
+                        <div id="group1" class="train-wheels"></div>
+                        <div id="group1" class="train-wheels"></div>
+                    </div>
+                    <div class="wheel-group2">
+                        <div id="group2" class="train-wheels"></div>
+                        <div id="group2" class="train-wheels"></div>
+                    </div>
+                </div>
+            </div>    
         </div>
         <div id="row2" class="row">
             <div id="box1" class="box">
@@ -162,14 +176,13 @@
         </div>
     </div>
 
-    <button id="open-popup">Open Popup</button>
-
     <div id="end-game" class="popup">
         <div class="content"> 
-            <h2>TEST!</h2>
+            <h3 id="outcome">OUTCOME</h3>
+            <h3 id="path">PATH</h3>
+            <button id="close-popup">CLOSE</button>
         </div>
-        
-    </div>
+    </div>    
 
     <script src="/script.js"></script>
 </body>

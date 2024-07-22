@@ -23,6 +23,11 @@ public class MainController {
         return pathInfo;
     }
 
+    @GetMapping("/printPath")
+    public String printPath() {
+        return SubwaydleApplication.sendPathToController();
+    }
+
     @PostMapping("/submitData")
     public String receiveData(@RequestBody String[] received_data) {
         // DO SOMETHING; -- pass data to subwaydle application to get back results of each box
