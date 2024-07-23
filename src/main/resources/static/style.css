@@ -69,32 +69,168 @@ h2 {
     flex-direction: row;
     justify-content: center;
 
-    width: 250px;
+    width: 600px;
+    height: 90px;
     padding: 15px; /* Adjust the padding to create space for the border */
     border: 2px solid black; /* Border around the box */
-    border-radius: 5%; /* Slightly larger border radius to accommodate the box's border-radius */
+    border-radius: 10px; /* Slightly larger border radius to accommodate the box's border-radius */
     box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
 
     /* background-color: maroon; */
-    background-color: rgba(128, 128, 128, 0.5);
-    gap: 10px; 
+    /* background-color: rgba(128, 128, 128); */
+    background-color: #c4c9cf;
+    gap: 40px; 
 
     position: relative;
-    z-index: 1;
+    z-index: 0;
 }
 
 .box {
-    width: 50px;
-    height: 50px;
+    width: 60px; /*50*/
+    height: 40px; /*50*/
     border: 2px grey solid; 
-    background-color: rgba(255, 255, 255, 0.5);
+    /* background-color: rgba(255, 255, 255, 0.5); */
+    background-color: rgba(134, 216, 230, 0.5);
     border-radius: 10%;
 
     position: relative;
-    z-index: 2;
+    z-index: 3; /*3*/
 
-    bottom: 25%;
+    bottom: 20%;
 } 
+
+#door {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    width: 60px;
+    height: 80px;
+    border: 2px grey solid; 
+    background-color: rgba(255, 255, 255, 0.5);
+
+    position: relative;
+    z-index: 3;
+
+    border-radius: 5%;
+    /* bottom: 23%; */
+    top: -11px;
+    left: -15px;
+
+    gap: 1px;
+}
+
+.door-split {
+    border: 1px grey solid; 
+    /* background-color: rgba(134, 216, 230, 0.5); */
+    margin: 0px;
+    height: 100%;
+
+    position: relative;
+    z-index: 4;
+
+    border-radius: 5%;
+    /* bottom: %;     */
+}
+
+.door-windows {
+    width: 24px;
+    height: 40px;
+    border: 1.5px grey solid; 
+    background-color: rgba(134, 216, 230, 0.5);
+
+    position: relative;
+    z-index: 4;
+
+    border-radius: 5%;
+    top: 2px;
+    /* bottom: %;     */
+}
+
+#small-window {
+    width: 24px;
+    height: 40px;
+    border: 2px grey solid; 
+    background-color: rgba(134, 216, 230, 0.5);
+
+    position: relative;
+    z-index: 4;
+
+    border-radius: 10%;
+    bottom: 20%;
+    left: -10px;
+}
+
+/* RAISE HIGHER */
+#car-number { 
+    color: white;
+    font-family: HelveticaBold, sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+
+    height: 18px;
+    border-radius: 5%;
+    
+    margin: 3px;
+    padding: 3px;
+    background-color: black;
+
+    text-align: center;
+    position: relative;
+
+    left: -15px;
+}
+
+#mid-line1, #mid-line2, #mid-line3 {
+    position: absolute;
+    left: 0;
+    width: 100%; /* Make the line span the full width of .box-border */
+    height: 2px; /* Line thickness */
+    background-color: rgba(128, 128, 128, 0.3);
+    z-index: 1; /* Lower than #door but higher than other elements */
+}
+
+#mid-line1 {
+    bottom: 30px; /* Positioned at the bottom of .box-border */
+}
+
+#mid-line2 {
+    bottom: 25px; /* Positioned at the bottom of .box-border */
+}
+
+#mid-line3 {
+    bottom: 20px; /* Positioned at the bottom of .box-border */
+}
+
+.all-wheels {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    position: relative;
+    z-index: -1;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+
+    gap: 90px;
+}
+
+.wheel-group1, .wheel-group2, .wheel-group3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+    gap: 10px;
+}
+
+.outer-wheels {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 4px solid black; /* Border around the box */
+    background-color: grey;
+}
 
 .train-design {
     display: flex;
@@ -104,33 +240,13 @@ h2 {
     position: relative;
 }
 
-.all-wheels {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-
-    position: absolute;
-    z-index: 2;
-    bottom: -20px;
-    left: 0;
-    right: 0;
-
-    gap: 30px;
-}
-
-.wheel-group1, .wheel-group2 {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-.train-wheels {
-    width: 40px;
-    height: 40px;
+/* .inner-wheels {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    border: 4px solid black; /* Border around the box */
+    border: 2px solid black; Border around the box
     background-color: grey;
-}
+} */
 
 .board-input {
     display: flex;
@@ -179,8 +295,8 @@ button:hover {
     position: relative;
     z-index: 2;
     
-    width: 50px;
-    height: 50px;
+    width: 40px; /*50*/
+    height: 40px; /*50*/
     border: 2px grey solid;
     background-color: #EDEFF1;
     border-radius: 10%;
@@ -191,8 +307,8 @@ button:hover {
     justify-content: center;
     align-items: center;
 
-    width: 30px;
-    height: 30px;
+    width: 20px; /*30*/
+    height: 20px; /*30*/
     /* border: 2px black solid; */
     border-radius: 50%;
     position: absolute;
@@ -269,8 +385,8 @@ button:hover {
     justify-content: center;
     align-items: center;
 
-    width: 80px;
-    height: 50px;
+    width: 60px; /*80*/
+    height: 40px; /*  50*/
     border: 2px grey solid;
     background-color: #EDEFF1;
     border-radius: 10%;

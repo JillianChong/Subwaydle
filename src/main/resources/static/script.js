@@ -5,7 +5,8 @@ var currentBox = 1;
 var greenHex = "#27BB5F";
 var blueHex = "#27A3BB";
 var yellowHex = "#F0DF4F";
-var grayHex = "#C7C7C4";
+// var grayHex = "#C7C7C4";
+var grayHex = "#959ba1";
 
 window.addEventListener('DOMContentLoaded', async function() {
     try {
