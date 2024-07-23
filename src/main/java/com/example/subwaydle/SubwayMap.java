@@ -43,7 +43,8 @@ public class SubwayMap {
         BufferedReader br;
         try {
             for(char train : trains) {
-                String filePath = "src/misc/stations/" + Character.toString(train) + "_train.txt";
+                String filePath = "src/main/resources/misc/stations/" + Character.toString(train) + "_train.txt";
+                // String filePath = "src/misc/stations/" + Character.toString(train) + "_train.txt";
                 file = new File(filePath);
 
                 br = new BufferedReader(new FileReader(file));
@@ -68,7 +69,8 @@ public class SubwayMap {
     }
 
     private void sortByTransfers() {
-        File file = new File("src/misc/transfers/transfers_copy.txt");
+        File file = new File("src/main/resources/misc/transfers/transfers_copy.txt");
+        // File file = new File("src/misc/transfers/transfers_copy.txt");
         BufferedReader br;
 
         try {
@@ -106,7 +108,8 @@ public class SubwayMap {
 
     private void sortTransfers() {
         try {
-            File file = new File("src/misc/transfers/transfers_copy.txt");
+            File file = new File("src/main/resources/misc/transfers/transfers_copy.txt");
+            // File file = new File("src/misc/transfers/transfers_copy.txt");
             BufferedReader br = new BufferedReader(new FileReader(file));  
 
             String line = br.readLine();
@@ -136,7 +139,8 @@ public class SubwayMap {
     }
 
     private String findDisplayName(String codeName, char train) { // only call if name has "(" or "&"
-        String csvFile = "src/misc/files/station_names.csv";
+    String csvFile = "src/main/resources/misc/files/station_names.csv";
+        // String csvFile = "src/misc/files/station_names.csv";
         try {
             CSVReader reader = new CSVReader(new FileReader(csvFile));
 
