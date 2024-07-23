@@ -1,11 +1,11 @@
 var guess = [];
 var currentRow = 1;
 var currentBox = 1;
+var win = false;
 
 var greenHex = "#27BB5F";
 var blueHex = "#27A3BB";
 var yellowHex = "#F0DF4F";
-// var grayHex = "#C7C7C4";
 var grayHex = "#959ba1";
 
 window.addEventListener('DOMContentLoaded', async function() {
@@ -38,6 +38,8 @@ window.addEventListener('DOMContentLoaded', async function() {
         }
 });
 
+window.addEventListener('DOMContentLoaded', updateCarNumber());
+
 window.addEventListener("keydown", takeKeyInput);
 
 const letterButtons = document.querySelectorAll('.letter');
@@ -69,8 +71,10 @@ function updateRowGUI(event) { // when enter is clicked
         .then(responseText => {
             return updateRowGUIHelper();
         }).then(() => {
-            if(currentRow == 7) {
+            if(currentRow == 7 && !win) {
                 updateWindow("YOU LOSE!");
+            } else if(currentRow == 7 && win) {
+                updateWindow("YAY! YOU WIN!");
             } else {
                 // currentRow++;
                 currentBox = 1;
@@ -103,6 +107,7 @@ async function updateRowGUIHelper() {
                 console.log("Board updated successfully.");
 
                 if(colors[0] == greenHex && colors[1] == greenHex && colors[2] == greenHex) {
+                    win = true;
                     await updateWindow("YAY! YOU WIN!"); // NEED TO MAKE TEHSE AWAIT
                 }
             } else {
@@ -211,6 +216,10 @@ function takeKeyInput(event) {
         //call updateBoxGUI with event
         const button = document.querySelector('#letter' + key);
 
+        if(button == null) {
+            return;
+        }
+
         // Create a new event to pass to updateBoxGUI
         const simulatedEvent = {
             target: button
@@ -262,4 +271,21 @@ async function updateWindow(outcome) {
     } catch(error) { 
         console.error('Error:', error);
     }
+}
+
+function updateCarNumber() {
+    const date = new Date();
+
+    var day = date.getDate();
+    day = String(day).padStart(2, '0');
+
+    var month = date.getMonth() + 1;
+    month = String(month).padStart(2, '0');
+
+    console.log("DAY: " + day);
+    console.log("MONTH: " + month);
+
+    const dateElements = document.querySelectorAll("#car-number");
+    dateElements.forEach(function(dateElement) {dateElement.innerHTML = `${month}${day}`;});
+
 }

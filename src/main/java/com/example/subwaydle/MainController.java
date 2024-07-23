@@ -12,7 +12,6 @@ public class MainController {
     String greenHex = "#27BB5F";
     String blueHex = "#27A3BB";
     String yellowHex = "#F0DF4F";
-    // String grayHex = "#C7C7C4";
     String grayHex = "#959ba1";
 
     int[] guessResults;
