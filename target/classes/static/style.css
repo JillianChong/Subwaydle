@@ -1,0 +1,451 @@
+@font-face {
+    font-family: HelveticaCustom;
+    src: url('/fonts/helvetica-255/Helvetica.ttf') format('truetype');
+
+    font-family: HelveticaBold;
+    src: url('/fonts/helvetica-255/Helvetica-Bold.ttf');
+
+    font-family: HelveticaBoldItalic;
+    src: url('/fonts/helvetica-255/Helvetica-BoldOblique.ttf');
+}
+
+html, body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    font-family: HelveticaCustom, sans-serif;
+    font-size: 1.25em;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    gap: 20px;
+}
+
+#title-design {
+    font-family: HelveticaBoldItalic, sans-serif;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    display: inline-block; /* Ensure element only takes up as much space as its conent */
+    background-color: #0039a6;
+    border-radius: 50%;
+    text-align: center; /* Center text inside border */
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+}
+
+#title-text {
+    font-size: 1.25em;
+    line-height: 70px; /* Vertically center text */
+    text-align: left; /* Center text horizontally */
+    position: relative; /* Positioned relative to its normal position */
+    left: -7px;
+}
+
+#title-cont {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 100px;
+
+    font-family: HelveticaBold, sans-serif;
+    font-weight: bold;
+    font-size: 2.5em;
+    color: #0039a6;
+}
+
+#board {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    gap: 5px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+    border: 2px;
+}
+
+.box-border {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    width: 600px;
+    height: 90px;
+    padding: 15px; /* Adjust the padding to create space for the border */
+    border: 3px solid black; /* Border around the box */
+    border-radius: 10px; /* Slightly larger border radius to accommodate the box's border-radius */
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+
+    /* background-color: maroon; */
+    /* background-color: rgba(128, 128, 128); */
+    background-color: #c4c9cf;
+    gap: 40px; 
+
+    position: relative;
+    z-index: 0;
+}
+
+.box {
+    width: 60px; /*50*/
+    height: 40px; /*50*/
+    border: 2px grey solid; 
+    /* background-color: rgba(255, 255, 255, 0.5); */
+    background-color: rgba(134, 216, 230, 0.5);
+    border-radius: 10%;
+
+    position: relative;
+    z-index: 3; /*3*/
+
+    bottom: 20%;
+} 
+
+#door {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    width: 60px;
+    height: 80px;
+    border: 2px grey solid; 
+    background-color: rgba(255, 255, 255, 0.5);
+
+    position: relative;
+    z-index: 3;
+
+    border-radius: 5%;
+    /* bottom: 23%; */
+    top: -12px;
+    left: -15px;
+
+    gap: 1px;
+}
+
+.door-split {
+    border: 1px grey solid; 
+    /* background-color: rgba(134, 216, 230, 0.5); */
+    margin: 0px;
+    height: 100%;
+
+    position: relative;
+    z-index: 4;
+
+    border-radius: 5%;
+    /* bottom: %;     */
+}
+
+.door-windows {
+    width: 24px;
+    height: 40px;
+    border: 1.5px grey solid; 
+    background-color: rgba(134, 216, 230, 0.5);
+
+    position: relative;
+    z-index: 4;
+
+    border-radius: 5%;
+    top: 2px;
+    /* bottom: %;     */
+}
+
+#small-window {
+    width: 24px;
+    height: 40px;
+    border: 2px grey solid; 
+    background-color: rgba(134, 216, 230, 0.5);
+
+    position: relative;
+    z-index: 4;
+
+    border-radius: 10%;
+    bottom: 20%;
+    left: -10px;
+}
+
+/* RAISE HIGHER */
+#car-number { 
+    color: white;
+    font-family: HelveticaBold, sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+
+    height: 18px;
+    border-radius: 5%;
+    
+    margin: 3px;
+    padding: 3px;
+    background-color: black;
+
+    text-align: center;
+    position: relative;
+
+    left: -15px;
+}
+
+#mid-line1, #mid-line2, #mid-line3 {
+    position: absolute;
+    left: 0;
+    width: 100%; /* Make the line span the full width of .box-border */
+    height: 2px; /* Line thickness */
+    background-color: rgba(128, 128, 128, 0.3);
+    z-index: 1; /* Lower than #door but higher than other elements */
+}
+
+#mid-line1 {
+    bottom: 30px; /* Positioned at the bottom of .box-border */
+}
+
+#mid-line2 {
+    bottom: 25px; /* Positioned at the bottom of .box-border */
+}
+
+#mid-line3 {
+    bottom: 20px; /* Positioned at the bottom of .box-border */
+}
+
+.all-wheels {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    position: relative;
+    z-index: -1;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+
+    gap: 90px;
+}
+
+.wheel-group1, .wheel-group2, .wheel-group3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+    gap: 10px;
+}
+
+.outer-wheels {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid black; /* Border around the box */
+    background-color: grey;
+}
+
+.train-design {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    position: relative;
+}
+
+/* .inner-wheels {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid black; Border around the box
+    background-color: grey;
+} */
+
+.board-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 30px;
+    height: 30px;
+    /* border: 2px black solid; */
+    border-radius: 50%;
+    position: absolute;
+    z-index: 1;
+
+    font-family: HelveticaBold, sans-serif;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#keyboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+#letters1, #letters2, #numbers {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.letter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    
+    width: 40px; /*50*/
+    height: 40px; /*50*/
+    border: 2px grey solid;
+    background-color: #EDEFF1;
+    border-radius: 10%;
+}
+
+.char {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 20px; /*30*/
+    height: 20px; /*30*/
+    /* border: 2px black solid; */
+    border-radius: 50%;
+    position: absolute;
+    z-index: 1;
+
+    font-family: HelveticaBold, sans-serif;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.greenHex {
+    /* background-color: #C7C7C4; */
+    background-color: #27BB5F;
+}
+
+.blueHex {
+    /* background-color: #C7C7C4; */
+    background-color: #27A3BB;
+}
+
+.yellowHex {
+    /* background-color: #C7C7C4; */
+    background-color: #F0DF4F;
+}
+
+.grayHex {
+    /* background-color: #C7C7C4; */
+    background-color: #C7C7C4;
+}
+
+#train1, #train2, #train3 {
+    background-color: #EE352E;
+}
+
+#train4, #train5, #train6 {
+    background-color: #00933C;
+}
+
+#train7 {
+    background-color: #B933AD;
+}
+
+#trainA, #trainC, #trainE {
+    background-color: #0039A6;
+}
+
+#trainB, #trainD, #trainF, #trainM {
+    background-color: #FF6319;
+}
+
+#trainG {
+    background-color: #6CBE45;
+}
+
+#trainL {
+    background-color: #A7A9AC;
+}
+
+#trainN, #trainQ, #trainR, #trainW {
+    background-color: #FCCC0A;
+    color: black;
+}
+
+#trainJ, #trainZ {
+    background-color: #996633;
+}
+ 
+#enter, #delete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 60px; /*80*/
+    height: 40px; /*  50*/
+    border: 2px grey solid;
+    background-color: #EDEFF1;
+    border-radius: 10%;
+
+    font-family: Helvetica-Bold, sans-serif;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    background-color: white;
+    border: 5px solid black;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px; 
+    width: 300px;
+    text-align: center;
+}
+
+h3 {
+    font-family: HelveticaCustom, sans-serif;
+    font-size: 1.25em;
+    color: black;
+}
+
+
+#open-popup {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+
