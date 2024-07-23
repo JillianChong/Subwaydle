@@ -70,9 +70,9 @@ public class MainController {
         return SubwaydleApplication.sendDisplayNameToController(codeName, train);
     }
 
-    @GetMapping("/redirect-to-subwaydle")
-    public String redirectToSubwaydle() {
-        // return "redirect:/subwaydle.html"; // This should match the path in `static` folder
-        return "redirect:/src/main/resources/templates/subwaydle.html";
-    }
+    // @GetMapping("/redirect-to-subwaydle")
+    // public String redirectToSubwaydle() {
+    //     // return "redirect:/subwaydle.html"; // This should match the path in `static` folder
+    //     return "redirect:/src/main/resources/static/subwaydle.html";
+    // }
 }

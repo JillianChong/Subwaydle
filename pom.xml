@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>22</java.version>
+		<spring-boot.version>3.3.1</spring-boot.version>
 	</properties>
 	<dependencies>
 
@@ -73,7 +74,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf</artifactId>
 			<version>3.1.2.RELEASE</version>
@@ -83,7 +84,7 @@
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf-spring5</artifactId>
 			<version>3.1.2.RELEASE</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>com.opencsv</groupId>
